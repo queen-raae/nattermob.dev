@@ -1,0 +1,31 @@
+{
+  "name": "y",
+  "version": "0.0.1",
+  "description": "Our nattermob HQ - so very meta!",
+  "main": "index.js",
+  "scripts": {
+    "develop": "gatsby develop",
+    "build": "gatsby build",
+    "clean": "gatsby clean",
+    "serve": "gatsby serve",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/raae/nattermob.dev.git"
+  },
+  "keywords": [
+    "gatsbyjs"
+  ],
+  "author": "Nattermob",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/raae/nattermob.dev/issues"
+  },
+  "homepage": "https://github.com/raae/nattermob.dev#readme",
+  "dependencies": {
+    "gatsby": "3.2.1",
+    "react": "17.0.2",
+    "react-dom": "17.0.2"
+  }
+}
