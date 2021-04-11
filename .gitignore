@@ -1,5 +1,11 @@
 # Gatsby
 public
+.env.development
+.env.production
+refs.md
+typeDefs.txt
+yarn.lock
+.DS_Store
 
 # Logs
 logs
