@@ -1,7 +1,29 @@
-import React from "react";
+import React from 'react';
+import { useStaticQuery, graphql } from 'gatsby';
 
 const IndexPage = () => {
-  return <h1>Nattermob.dev</h1>;
+  const data = useStaticQuery(graphql`
+    query youTubeQuery {
+      allYoutube {
+        nodes {
+          snippet {
+            title
+          }
+        }
+      }
+    }
+  `);
+
+  return (
+    <main>
+      <h1>Nattermob.dev</h1>
+      <ul>
+        {data.allYoutube.nodes.map((item, index) => {
+          return <li key={index}>{item.snippet.title}</li>;
+        })}
+      </ul>
+    </main>
+  );
 };
 
 export default IndexPage;
