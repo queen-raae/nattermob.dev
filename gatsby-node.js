@@ -1,8 +1,48 @@
 const { google } = require('googleapis');
 
-// exports.createSchemaCustomization = ({ actions }) => {
-//   actions.printTypeDefinitions({ path: './typeDefs.txt' });
-// };
+exports.createSchemaCustomization = ({ actions }) => {
+  const typeDefs = `
+
+  type youtube implements Node @dontInfer {
+    kind: String,
+    etag: String,
+    id: Id
+    snippet: Snippet
+  }
+
+  type Id @dontInfer {
+    king: String
+    videoId: String
+  }
+
+  type Snippet @dontInfer {
+    publishedAt: String
+    channelId: String
+    title: String
+    description: String
+    thumbnails: Thumbnails
+    channelTitle: String
+    liveBroadcastContent: String
+    publishTime: String
+  }
+
+  type Thumbnails @dontInfer {
+    default: ThumbnailsImage
+    medium: ThumbnailsImage
+    high: ThumbnailsImage
+  }
+
+  type ThumbnailsImage @dontInfer {
+    url: String
+    width: Int
+    height: Int
+  }
+  `;
+
+  actions.createTypes(typeDefs);
+
+  actions.printTypeDefinitions({ path: './typeDefs.txt' });
+};
 
 exports.sourceNodes = async ({
   actions,
@@ -21,7 +61,7 @@ exports.sourceNodes = async ({
     {
       channelId: BENEDICTE,
       part: 'snippet',
-      maxResults: 50,
+      maxResults: 2,
       order: 'date',
       type: 'video'
     },
@@ -32,7 +72,8 @@ exports.sourceNodes = async ({
       }
 
       response.data.items.forEach((video, index) => {
-        // console.log(video);
+        // console.log(JSON.stringify(video, null, 2));
+
         actions.createNode({
           ...video,
           id: createNodeId(`${NODE_TYPE}-${index}`),

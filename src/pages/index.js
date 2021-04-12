@@ -14,6 +14,8 @@ const IndexPage = () => {
     }
   `);
 
+  console.log(data);
+
   return (
     <main>
       <h1>Nattermob.dev</h1>
