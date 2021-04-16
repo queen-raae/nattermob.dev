@@ -3,13 +3,13 @@ require("dotenv").config({
   path: `.env.${process.env.NODE_ENV}`,
 });
 
-exports.sourceNodes = () => {
+exports.sourceNodes = async ({actions, createNodeId, createContentDigest}) => {
   const youtube = google.youtube({
     version: "v3",
     auth: process.env.GOOGLE_API_KEY,
   });
 
-  youtube.search.list(
+  await youtube.search.list(
     {
       channelId: "UCDlrzlRdM1vGr8nO708KFmQ",
       part: "snippet",
@@ -22,7 +22,16 @@ exports.sourceNodes = () => {
         throw error;
       }
 
-      console.log(response.data.items);
+      response.data.items.forEach((video, index) => {
+        actions.createNode({
+          ...video,
+          id: createNodeId(`yt-${index}`),
+          internal: {
+            type: "yt",
+            contentDigest: createContentDigest(video),
+          },
+        });
+      });
     }
   );
 };
