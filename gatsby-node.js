@@ -20,9 +20,9 @@ exports.sourceNodes = async ({actions, createNodeId, createContentDigest}) => {
   response.data.items.forEach((video, index) => {
     actions.createNode({
       ...video,
-      id: createNodeId(`yt-${index}`),
+      id: createNodeId(`youtube-${index}`),
       internal: {
-        type: "yt",
+        type: "YouTube",
         contentDigest: createContentDigest(video),
       },
     });
