@@ -1,13 +1,14 @@
-import React from "react";
-import {graphql} from "gatsby";
+import React from 'react';
+import { graphql, Link } from 'gatsby';
 
-const YouTubePage = ({data: {youTube}}) => {
+const YouTubePage = ({ data: { youTube } }) => {
   const {
-    snippet: {title, description, thumbnails, channelTitle},
+    snippet: { title, description, thumbnails, channelTitle }
   } = youTube;
 
   return (
-    <main style={{maxWidth: "800px", margin: "0 auto"}}>
+    <main style={{ maxWidth: '800px', margin: '0 auto' }}>
+      <Link to="/">Back</Link>
       <h1>{title}</h1>
       <aside>
         <img alt={title} src={thumbnails.high.url} />
@@ -20,7 +21,7 @@ const YouTubePage = ({data: {youTube}}) => {
 
 export const query = graphql`
   query($id: String) {
-    youTube(id: {eq: $id}) {
+    youTube(id: { eq: $id }) {
       snippet {
         title
         description

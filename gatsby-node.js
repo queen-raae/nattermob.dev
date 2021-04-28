@@ -1,4 +1,6 @@
 const { google } = require('googleapis');
+const slugify = require('@sindresorhus/slugify');
+
 require('dotenv').config({
   path: `.env.${process.env.NODE_ENV}`
 });
@@ -18,14 +20,19 @@ exports.sourceNodes = async ({
   const response = await youtube.search.list({
     channelId: 'UCDlrzlRdM1vGr8nO708KFmQ',
     part: 'snippet',
-    maxResults: 2,
+    maxResults: 10,
     order: 'date',
-    type: 'video'
+    type: 'video',
+    q: '#Nattermob'
   });
 
   response.data.items.forEach((video, index) => {
     actions.createNode({
       ...video,
+      youTubeId: {
+        ...video.id,
+        videoId: slugify(video.id.videoId)
+      },
       id: createNodeId(`${YOUTUBE}-${index}`),
       internal: {
         type: YOUTUBE,
