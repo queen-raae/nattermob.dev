@@ -6,13 +6,11 @@ const IndexPage = () => {
     query {
       allYouTube {
         nodes {
-          youTubeId {
-            videoId
-          }
+          slug
           snippet {
             title
           }
-          gatsbyPath(filePath: "/{youTube.youTubeId__videoId}")
+          gatsbyPath(filePath: "/{youTube.slug}")
         }
       }
     }
@@ -23,10 +21,10 @@ const IndexPage = () => {
       <h1>Nattermob.dev</h1>
       <ul>
         {videos.allYouTube.nodes.map((video, index) => {
-          const { snippet, youTubeId } = video;
+          const { snippet, slug } = video;
           return (
             <li key={index}>
-              <Link to={`/${youTubeId.videoId}`}>{snippet.title}</Link>
+              <Link to={`/${slug}`}>{snippet.title}</Link>
             </li>
           );
         })}

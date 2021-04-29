@@ -5,11 +5,7 @@ require('dotenv').config({
   path: `.env.${process.env.NODE_ENV}`
 });
 
-exports.sourceNodes = async ({
-  actions,
-  createNodeId,
-  createContentDigest
-}) => {
+exports.sourceNodes = async ({ actions, createContentDigest }) => {
   const YOUTUBE = 'youTube';
 
   const youtube = google.youtube({
@@ -29,11 +25,8 @@ exports.sourceNodes = async ({
   response.data.items.forEach((video, index) => {
     actions.createNode({
       ...video,
-      youTubeId: {
-        ...video.id,
-        videoId: slugify(video.id.videoId)
-      },
-      id: createNodeId(`${YOUTUBE}-${index}`),
+      slug: slugify(video.id.videoId),
+      id: `${video.id.videoId}`,
       internal: {
         type: YOUTUBE,
         contentDigest: createContentDigest(video)
