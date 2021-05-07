@@ -10,7 +10,7 @@ const Seo = ({children}) => {
     <>
       <Helmet>
         <html lang="en-gb" />
-        <link rel="canonical" href={domain} />
+        {/* <link rel="canonical" href={domain} /> */}
 
         <title>{title}</title>
         <meta name="title" content={title} />
