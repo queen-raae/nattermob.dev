@@ -10,7 +10,7 @@ const YouTubePage = ({ data: { youTube } }) => {
   } = youTube;
 
   return (
-    <Seo slug={slug}>
+    <Seo pageTitle={title} pageDescription={description} slug={slug}>
       <main style={{ maxWidth: '800px', margin: '0 auto', padding: '1em' }}>
         <Link to="/">← nattermob.dev</Link>
         <h1>{title}</h1>
