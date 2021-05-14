@@ -1,23 +1,26 @@
-import React from "react";
-import Helmet from "react-helmet";
+import React from 'react';
+import Helmet from 'react-helmet';
 
-const Seo = ({children}) => {
-  const title = "Gatsby Deep Dives with Queen Raae and the Nattermob Pirates";
-  const domain = "https://nattermob.dev";
+const Seo = ({ children, slug = '' }) => {
+  const title = 'Gatsby Deep Dives with Queen Raae and the Nattermob Pirates';
+  const domain = 'https://nattermob.dev';
   const description =
-    "A rum fueled treasure hunt in the sharky waters around Gatsby islands.";
+    'A rum fueled treasure hunt in the sharky waters around Gatsby islands.';
+
+  const url = `${domain}/${slug}`;
+
   return (
     <>
       <Helmet>
         <html lang="en-gb" />
-        {/* <link rel="canonical" href={domain} /> */}
+        <link rel="canonical" href={url} />
 
         <title>{title}</title>
         <meta name="title" content={title} />
         <meta name="description" content={description} />
 
         <meta property="og:type" content="website" />
-        <meta property="og:url" content={domain} />
+        <meta property="og:url" content={url} />
         <meta property="og:title" content={title} />
         <meta property="og:description" content={description} />
         {/* <meta
@@ -26,7 +29,7 @@ const Seo = ({children}) => {
         /> */}
 
         {/* <meta property="twitter:card" content="summary_large_image" /> */}
-        <meta property="twitter:url" content={domain} />
+        <meta property="twitter:url" content={url} />
         <meta property="twitter:title" content={title} />
         <meta property="twitter:description" content={description} />
         {/* <meta
