@@ -1,5 +1,6 @@
-import React from "react";
-import {useStaticQuery, graphql, Link} from "gatsby";
+import React from 'react';
+import { useStaticQuery, graphql, Link } from 'gatsby';
+import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 
 const IndexPage = () => {
   const videos = useStaticQuery(graphql`
@@ -7,16 +8,20 @@ const IndexPage = () => {
       allYouTube {
         nodes {
           slug
+          image {
+            url {
+              childImageSharp {
+                gatsbyImageData(
+                  transformOptions: { fit: COVER, cropFocus: CENTER }
+                  width: 180
+                  height: 100
+                )
+              }
+            }
+          }
           gatsbyPath(filePath: "/{youTube.slug}")
           snippet {
             title
-            thumbnails {
-              default {
-                url
-                height
-                width
-              }
-            }
           }
         }
       }
@@ -26,23 +31,25 @@ const IndexPage = () => {
   const treasure = videos.allYouTube.nodes;
 
   return (
-    <main style={{maxWidth: "800px", margin: "0 auto"}}>
+    <main style={{ maxWidth: '800px', margin: '0 auto' }}>
       <h1>Nattermob.dev</h1>
       <ul>
-        {treasure.map((video) => (
-          <li key={video.slug}>
-            <Link to={video.gatsbyPath}>
-              <img
-                alt={video.snippet.title}
-                src={video.snippet.thumbnails.default.url}
-              />
-              <br />
-              {video.snippet.title}
-              <br />
-              <br />
-            </Link>
-          </li>
-        ))}
+        {treasure.map((video) => {
+          return (
+            <li key={video.slug}>
+              <Link to={video.gatsbyPath}>
+                <GatsbyImage
+                  alt={video.snippet.title}
+                  image={getImage(video.image.url)}
+                />
+                <br />
+                {video.snippet.title}
+                <br />
+                <br />
+              </Link>
+            </li>
+          );
+        })}
       </ul>
     </main>
   );

@@ -1,36 +1,73 @@
-const {google} = require("googleapis");
-const slugify = require("@sindresorhus/slugify");
+const { google } = require('googleapis');
+const slugify = require('@sindresorhus/slugify');
+const { createRemoteFileNode } = require('gatsby-source-filesystem');
 
-require("dotenv").config({
-  path: `.env.${process.env.NODE_ENV}`,
+require('dotenv').config({
+  path: `.env.${process.env.NODE_ENV}`
 });
 
-exports.sourceNodes = async ({actions, createContentDigest}) => {
-  const YOUTUBE = "youTube";
+const YOUTUBE = 'youTube';
 
+exports.createSchemaCustomization = ({
+  actions: { createTypes, printTypeDefinitions }
+}) => {
+  createTypes(`
+  type youTube implements Node  {
+    image: youTubeImage
+  }
+  type youTubeImage @dontInfer {
+    url: File @link(by: "url")
+  }
+  `);
+
+  // printTypeDefinitions({ path: './typeDefs.txt' });
+};
+
+exports.sourceNodes = async ({
+  actions: { createNode },
+  createNodeId,
+  createContentDigest
+}) => {
   const youtube = google.youtube({
-    version: "v3",
-    auth: process.env.GOOGLE_API_KEY,
+    version: 'v3',
+    auth: process.env.GOOGLE_API_KEY
   });
 
   const response = await youtube.search.list({
-    channelId: "UCDlrzlRdM1vGr8nO708KFmQ",
-    part: "snippet",
+    channelId: 'UCDlrzlRdM1vGr8nO708KFmQ',
+    part: 'snippet',
     maxResults: 10,
-    order: "date",
-    type: "video",
-    q: "#Nattermob",
+    order: 'date',
+    type: 'video',
+    q: '#Nattermob'
   });
 
   response.data.items.forEach((video) => {
-    actions.createNode({
+    createNode({
       ...video,
       id: `${video.id.videoId}`,
       slug: slugify(video.id.videoId),
       internal: {
         type: YOUTUBE,
-        contentDigest: createContentDigest(video),
-      },
+        contentDigest: createContentDigest(video)
+      }
     });
   });
+};
+
+exports.onCreateNode = async ({
+  node,
+  actions: { createNode },
+  createNodeId,
+  cache
+}) => {
+  if (node.internal.type === YOUTUBE) {
+    node.image = await createRemoteFileNode({
+      url: `${node.snippet.thumbnails.high.url}`,
+      parentNodeId: `${node.id.videoId}`,
+      createNode,
+      createNodeId,
+      cache
+    });
+  }
 };
