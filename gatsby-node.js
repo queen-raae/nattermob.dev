@@ -19,7 +19,6 @@ exports.createSchemaCustomization = ({
     url: File @link(by: "url")
   }
   `);
-
   // printTypeDefinitions({ path: './typeDefs.txt' });
 };
 
@@ -45,7 +44,7 @@ exports.sourceNodes = async ({
   response.data.items.forEach((video) => {
     createNode({
       ...video,
-      id: `${video.id.videoId}`,
+      id: video.id.videoId,
       slug: slugify(video.id.videoId),
       internal: {
         type: YOUTUBE,
@@ -63,8 +62,8 @@ exports.onCreateNode = async ({
 }) => {
   if (node.internal.type === YOUTUBE) {
     node.image = await createRemoteFileNode({
-      url: `${node.snippet.thumbnails.high.url}`,
-      parentNodeId: `${node.id.videoId}`,
+      url: node.snippet.thumbnails.high.url,
+      parentNodeId: node.id.videoId,
       createNode,
       createNodeId,
       cache
