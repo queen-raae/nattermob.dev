@@ -20,9 +20,9 @@ exports.createSchemaCustomization = ({
     }
   `);
 
-  printTypeDefinitions({
-    path: "./types.txt",
-  });
+  // printTypeDefinitions({
+  //   path: "./types.txt",
+  // });
 };
 
 exports.sourceNodes = async ({actions, createContentDigest}) => {
