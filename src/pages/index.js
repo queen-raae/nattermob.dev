@@ -1,5 +1,6 @@
 import React from "react";
 import {useStaticQuery, graphql, Link} from "gatsby";
+import {GatsbyImage, getImage} from "gatsby-plugin-image";
 
 const IndexPage = () => {
   const videos = useStaticQuery(graphql`
@@ -7,6 +8,17 @@ const IndexPage = () => {
       allYouTube {
         nodes {
           slug
+          image {
+            url {
+              childImageSharp {
+                gatsbyImageData(
+                  transformOptions: {fit: COVER, cropFocus: CENTER}
+                  width: 180
+                  height: 100
+                )
+              }
+            }
+          }
           gatsbyPath(filePath: "/{youTube.slug}")
           snippet {
             title
@@ -32,9 +44,9 @@ const IndexPage = () => {
         {treasure.map((video) => (
           <li key={video.slug}>
             <Link to={video.gatsbyPath}>
-              <img
+              <GatsbyImage
                 alt={video.snippet.title}
-                src={video.snippet.thumbnails.default.url}
+                image={getImage(video.image.url)}
               />
               <br />
               {video.snippet.title}

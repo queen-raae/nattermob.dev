@@ -1,12 +1,15 @@
 import React from "react";
 import {graphql, Link} from "gatsby";
+import {GatsbyImage, getImage} from "gatsby-plugin-image";
+
 import Seo from "../components/Seo";
 
 const YouTubePage = ({data: {youTube}}) => {
   const {
     id,
     gatsbyPath,
-    snippet: {title, description, thumbnails, channelTitle},
+    snippet: {title, description, channelTitle},
+    image,
   } = youTube;
 
   return (
@@ -16,7 +19,7 @@ const YouTubePage = ({data: {youTube}}) => {
         <h1>{title}</h1>
         <aside>
           <a href={`https://youtu.be/${id}`} target="_blank" rel="noreferrer">
-            <img alt={title} src={thumbnails.high.url} />
+            <GatsbyImage alt={title} image={getImage(image.url)} />
           </a>
           <p>
             <a href={`https://youtu.be/${id}`} target="_blank" rel="noreferrer">
@@ -36,6 +39,17 @@ export const query = graphql`
     youTube(id: {eq: $id}) {
       id
       gatsbyPath(filePath: "/{youTube.slug}")
+      image {
+        url {
+          childImageSharp {
+            gatsbyImageData(
+              transformOptions: {fit: COVER, cropFocus: CENTER}
+              width: 1280
+              height: 720
+            )
+          }
+        }
+      }
       snippet {
         title
         description
