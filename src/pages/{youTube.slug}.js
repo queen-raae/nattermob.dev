@@ -8,7 +8,7 @@ const YouTubePage = ({data: {youTube}}) => {
   const {
     id,
     gatsbyPath,
-    snippet: {title, description, thumbnails, channelTitle},
+    snippet: {title, description, channelTitle},
     image,
   } = youTube;
 
@@ -42,7 +42,11 @@ export const query = graphql`
       image {
         url {
           childImageSharp {
-            gatsbyImageData(width: 1280, height: 720)
+            gatsbyImageData(
+              transformOptions: {fit: COVER, cropFocus: CENTER}
+              width: 180
+              height: 100
+            )
           }
         }
       }

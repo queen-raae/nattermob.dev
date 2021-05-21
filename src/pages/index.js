@@ -11,7 +11,11 @@ const IndexPage = () => {
           image {
             url {
               childImageSharp {
-                gatsbyImageData(width: 180, height: 100)
+                gatsbyImageData(
+                  transformOptions: {fit: COVER, cropFocus: CENTER}
+                  width: 180
+                  height: 100
+                )
               }
             }
           }
