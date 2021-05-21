@@ -44,8 +44,8 @@ export const query = graphql`
           childImageSharp {
             gatsbyImageData(
               transformOptions: {fit: COVER, cropFocus: CENTER}
-              width: 180
-              height: 100
+              width: 1280
+              height: 720
             )
           }
         }
