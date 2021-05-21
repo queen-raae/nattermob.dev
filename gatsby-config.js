@@ -5,5 +5,19 @@ module.exports = {
     description:
       "A rum fueled treasure hunt in the sharky waters around Gatsby islands.",
   },
-  plugins: [`gatsby-plugin-react-helmet`],
+  plugins: [
+    `gatsby-plugin-react-helmet`,
+    `gatsby-plugin-image`,
+    `gatsby-transformer-sharp`,
+    {
+      resolve: `gatsby-plugin-sharp`,
+      options: {
+        defaults: {
+          quality: 100,
+          format: ["auto", "webp", "avif"],
+          placeholder: "blurred",
+        },
+      },
+    },
+  ],
 };
