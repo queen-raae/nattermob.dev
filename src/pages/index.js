@@ -1,10 +1,13 @@
-import React from "react";
-import {useStaticQuery, graphql, Link} from "gatsby";
-import {GatsbyImage, getImage} from "gatsby-plugin-image";
+import React from 'react';
+import { useStaticQuery, graphql, Link } from 'gatsby';
+import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 
 const IndexPage = () => {
   const videos = useStaticQuery(graphql`
     {
+      built {
+        timestamp
+      }
       allYouTube {
         nodes {
           slug
@@ -12,7 +15,7 @@ const IndexPage = () => {
             url {
               childImageSharp {
                 gatsbyImageData(
-                  transformOptions: {fit: COVER, cropFocus: CENTER}
+                  transformOptions: { fit: COVER, cropFocus: CENTER }
                   width: 180
                   height: 100
                 )
@@ -38,8 +41,14 @@ const IndexPage = () => {
   const treasure = videos.allYouTube.nodes;
 
   return (
-    <main style={{maxWidth: "800px", margin: "0 auto"}}>
+    <main style={{ maxWidth: '800px', margin: '0 auto' }}>
       <h1>Nattermob.dev</h1>
+      <p>
+        Site last built @{' '}
+        <span style={{ color: 'red', fontWeight: 'bold' }}>
+          {videos.built.timestamp}
+        </span>
+      </p>
       <ul>
         {treasure.map((video) => (
           <li key={video.slug}>
