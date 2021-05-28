@@ -1,15 +1,15 @@
-const {google} = require("googleapis");
-const slugify = require("@sindresorhus/slugify");
-const {createRemoteFileNode} = require("gatsby-source-filesystem");
+const { google } = require('googleapis');
+const slugify = require('@sindresorhus/slugify');
+const { createRemoteFileNode } = require('gatsby-source-filesystem');
 
-const YOUTUBE = "youTube";
+const YOUTUBE = 'youTube';
 
-require("dotenv").config({
-  path: `.env.${process.env.NODE_ENV}`,
+require('dotenv').config({
+  path: `.env.${process.env.NODE_ENV}`
 });
 
 exports.createSchemaCustomization = ({
-  actions: {createTypes, printTypeDefinitions},
+  actions: { createTypes, printTypeDefinitions }
 }) => {
   createTypes(`
     type youTube implements Node {
@@ -25,19 +25,19 @@ exports.createSchemaCustomization = ({
   // });
 };
 
-exports.sourceNodes = async ({actions, createContentDigest}) => {
+exports.sourceNodes = async ({ actions, createContentDigest }) => {
   const youtube = google.youtube({
-    version: "v3",
-    auth: process.env.GOOGLE_API_KEY,
+    version: 'v3',
+    auth: process.env.GOOGLE_API_KEY
   });
 
   const response = await youtube.search.list({
-    channelId: "UCDlrzlRdM1vGr8nO708KFmQ",
-    part: "snippet",
+    channelId: 'UCDlrzlRdM1vGr8nO708KFmQ',
+    part: 'snippet',
     maxResults: 10,
-    order: "date",
-    type: "video",
-    q: "#Nattermob",
+    order: 'date',
+    type: 'video',
+    q: '#Nattermob'
   });
 
   response.data.items.forEach((video) => {
@@ -47,25 +47,27 @@ exports.sourceNodes = async ({actions, createContentDigest}) => {
       slug: slugify(video.id.videoId),
       internal: {
         type: YOUTUBE,
-        contentDigest: createContentDigest(video),
-      },
+        contentDigest: createContentDigest(video)
+      }
     });
   });
 };
 
 exports.onCreateNode = async ({
   node,
-  actions: {createNode},
+  actions: { createNode },
   createNodeId,
   cache,
+  store
 }) => {
   if (node.internal.type === YOUTUBE) {
     node.image = await createRemoteFileNode({
       url: node.snippet.thumbnails.high.url,
-      parentNodeId: node.id.videoId,
+      parentNodeId: node.id,
       createNode,
       createNodeId,
       cache,
+      store
     });
   }
 };
