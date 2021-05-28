@@ -3,8 +3,11 @@ import {useStaticQuery, graphql, Link} from "gatsby";
 import {GatsbyImage, getImage} from "gatsby-plugin-image";
 
 const IndexPage = () => {
-  const videos = useStaticQuery(graphql`
+  const data = useStaticQuery(graphql`
     {
+      built {
+        timestamp
+      }
       allYouTube {
         nodes {
           slug
@@ -35,11 +38,12 @@ const IndexPage = () => {
     }
   `);
 
-  const treasure = videos.allYouTube.nodes;
+  const treasure = data.allYouTube.nodes;
 
   return (
     <main style={{maxWidth: "800px", margin: "0 auto"}}>
       <h1>Nattermob.dev</h1>
+      <p>{data.built.timestamp}</p>
       <ul>
         {treasure.map((video) => (
           <li key={video.slug}>
