@@ -1,11 +1,11 @@
-import React from "react";
-import Helmet from "react-helmet";
-import {graphql, useStaticQuery} from "gatsby";
+import React from "react"
+import Helmet from "react-helmet"
+import { graphql, useStaticQuery } from "gatsby"
 
-const Seo = ({path = "", pageTitle, pageDescription, children}) => {
+const Seo = ({ path = "", pageTitle, pageDescription, children }) => {
   const {
     site: {
-      siteMetadata: {title, description, domain},
+      siteMetadata: { title, description, domain },
     },
   } = useStaticQuery(graphql`
     query {
@@ -17,10 +17,10 @@ const Seo = ({path = "", pageTitle, pageDescription, children}) => {
         }
       }
     }
-  `);
-  const seoTitle = pageTitle ? pageTitle : title;
-  const seoDescription = pageDescription ? pageDescription : description;
-  const seoUrl = `${domain}${path}`;
+  `)
+  const seoTitle = pageTitle ? pageTitle : title
+  const seoDescription = pageDescription ? pageDescription : description
+  const seoUrl = `${domain}${path}`
 
   return (
     <>
@@ -52,7 +52,7 @@ const Seo = ({path = "", pageTitle, pageDescription, children}) => {
       </Helmet>
       {children}
     </>
-  );
-};
+  )
+}
 
-export default Seo;
+export default Seo

@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react"
 
 const LiveNowMarquee = () => {
   return (
@@ -7,17 +7,17 @@ const LiveNowMarquee = () => {
       rel="noreferrer"
       target="_blank"
       style={{
-        textDecoration: 'none'
+        textDecoration: "none",
       }}
     >
       <div
         style={{
-          display: 'grid',
-          placeItems: 'center',
-          gridTemplateColumns: 'auto 1fr',
-          backgroundColor: '#ff000090',
-          padding: '8px',
-          color: 'white'
+          display: "grid",
+          placeItems: "center",
+          gridTemplateColumns: "auto 1fr",
+          backgroundColor: "#ff000090",
+          padding: "8px",
+          color: "white",
         }}
       >
         <span aria-label="Red Circle" role="img">
@@ -26,14 +26,14 @@ const LiveNowMarquee = () => {
 
         <marquee
           style={{
-            backgroundColor: '#ff0000'
+            backgroundColor: "#ff0000",
           }}
         >
           Live Now | https://www.youtube.com/raaecodes
         </marquee>
       </div>
     </a>
-  );
-};
+  )
+}
 
-export default LiveNowMarquee;
+export default LiveNowMarquee
