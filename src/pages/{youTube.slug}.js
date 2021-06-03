@@ -36,7 +36,7 @@ const YouTubePage = ({ data: { youTube } }) => {
 }
 
 export const query = graphql`
-  query($id: String) {
+  query ($id: String) {
     youTube(id: { eq: $id }) {
       id
       gatsbyPath(filePath: "/{youTube.slug}")
