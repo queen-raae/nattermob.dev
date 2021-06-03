@@ -1,6 +1,6 @@
-import React from 'react';
-import Seo from './src/components/seo';
+import React from "react"
+import Seo from "./src/components/seo"
 
 export const wrapPageElement = ({ element }) => {
-  return <Seo>{element}</Seo>;
-};
+  return <Seo>{element}</Seo>
+}

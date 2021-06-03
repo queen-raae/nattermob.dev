@@ -1,20 +1,20 @@
-import React from 'react';
-import { graphql, Link } from 'gatsby';
-import { GatsbyImage, getImage } from 'gatsby-plugin-image';
+import React from "react"
+import { graphql, Link } from "gatsby"
+import { GatsbyImage, getImage } from "gatsby-plugin-image"
 
-import Seo from '../components/seo';
+import Seo from "../components/seo"
 
 const YouTubePage = ({ data: { youTube } }) => {
   const {
     id,
     gatsbyPath,
     snippet: { publishedAt, title, description, channelTitle },
-    image
-  } = youTube;
+    image,
+  } = youTube
 
   return (
     <Seo path={gatsbyPath} pageTitle={title} pageDescription={description}>
-      <main style={{ maxWidth: '800px', margin: '0 auto', padding: '1em' }}>
+      <main style={{ maxWidth: "800px", margin: "0 auto", padding: "1em" }}>
         <Link to="/">← nattermob.dev</Link>
         <p>{publishedAt}</p>
         <h1>{title}</h1>
@@ -32,8 +32,8 @@ const YouTubePage = ({ data: { youTube } }) => {
         <p>{description}</p>
       </main>
     </Seo>
-  );
-};
+  )
+}
 
 export const query = graphql`
   query($id: String) {
@@ -66,6 +66,6 @@ export const query = graphql`
       }
     }
   }
-`;
+`
 
-export default YouTubePage;
+export default YouTubePage

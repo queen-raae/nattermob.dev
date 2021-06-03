@@ -1,15 +1,15 @@
-const { google } = require('googleapis');
-const slugify = require('@sindresorhus/slugify');
-const { createRemoteFileNode } = require('gatsby-source-filesystem');
+const { google } = require("googleapis")
+const slugify = require("@sindresorhus/slugify")
+const { createRemoteFileNode } = require("gatsby-source-filesystem")
 
-const YOUTUBE = 'youTube';
+const YOUTUBE = "youTube"
 
-require('dotenv').config({
-  path: `.env.${process.env.NODE_ENV}`
-});
+require("dotenv").config({
+  path: `.env.${process.env.NODE_ENV}`,
+})
 
 exports.createSchemaCustomization = ({
-  actions: { createTypes, printTypeDefinitions }
+  actions: { createTypes, printTypeDefinitions },
 }) => {
   createTypes(`
     type youTube implements Node {
@@ -18,47 +18,47 @@ exports.createSchemaCustomization = ({
     type youTubeImage @dontInfer {
       url: File @link(by: "url")
     }
-  `);
+  `)
 
   // printTypeDefinitions({
   //   path: "./types.txt",
   // });
-};
+}
 
 exports.sourceNodes = async ({
   actions: { createNode },
-  createContentDigest
+  createContentDigest,
 }) => {
-  const date = new Date();
-  const hours = date.getHours();
-  const mins = date.getMinutes();
-  const seconds = date.getSeconds();
-  const timestamp = `h:${hours} m:${mins} s:${seconds}`;
+  const date = new Date()
+  const hours = date.getHours()
+  const mins = date.getMinutes()
+  const seconds = date.getSeconds()
+  const timestamp = `h:${hours} m:${mins} s:${seconds}`
 
-  console.log('///// TIMESTAMPS ////', timestamp);
+  console.log("///// TIMESTAMPS ////", timestamp)
 
   createNode({
     timestamp: date,
-    id: 'timestamp',
+    id: "timestamp",
     internal: {
-      type: 'built',
-      contentDigest: createContentDigest(date)
-    }
-  });
+      type: "built",
+      contentDigest: createContentDigest(timestamp),
+    },
+  })
 
   const youtube = google.youtube({
-    version: 'v3',
-    auth: process.env.GOOGLE_API_KEY
-  });
+    version: "v3",
+    auth: process.env.GOOGLE_API_KEY,
+  })
 
   const response = await youtube.search.list({
-    channelId: 'UCDlrzlRdM1vGr8nO708KFmQ',
-    part: 'snippet',
+    channelId: "UCDlrzlRdM1vGr8nO708KFmQ",
+    part: "snippet",
     maxResults: 50,
-    order: 'date',
-    type: 'video',
-    q: '#Nattermob #GatsbyJS Deep Dive Dives'
-  });
+    order: "date",
+    type: "video",
+    q: "#Nattermob #GatsbyJS Deep Dive Dives",
+  })
 
   response.data.items.forEach((video) => {
     createNode({
@@ -67,18 +67,18 @@ exports.sourceNodes = async ({
       slug: slugify(video.id.videoId),
       internal: {
         type: YOUTUBE,
-        contentDigest: createContentDigest(video)
-      }
-    });
-  });
-};
+        contentDigest: createContentDigest(video),
+      },
+    })
+  })
+}
 
 exports.onCreateNode = async ({
   node,
   actions: { createNode },
   createNodeId,
   cache,
-  store
+  store,
 }) => {
   if (node.internal.type === YOUTUBE) {
     node.image = await createRemoteFileNode({
@@ -87,7 +87,7 @@ exports.onCreateNode = async ({
       createNode,
       createNodeId,
       cache,
-      store
-    });
+      store,
+    })
   }
-};
+}
