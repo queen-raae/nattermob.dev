@@ -1,21 +1,23 @@
-import React from "react";
-import {useStaticQuery, graphql, Link} from "gatsby";
-import {GatsbyImage, getImage} from "gatsby-plugin-image";
+import React from 'react';
+import { useStaticQuery, graphql, Link } from 'gatsby';
+import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 
 const IndexPage = () => {
   const data = useStaticQuery(graphql`
     {
       built {
-        timestamp
+        timestamp(formatString: "DD/MMM/YYYY, h:mm:ss a")
       }
-      allYouTube {
+      allYouTube(
+        filter: { snippet: { liveBroadcastContent: { ne: "upcoming" } } }
+      ) {
         nodes {
           slug
           image {
             url {
               childImageSharp {
                 gatsbyImageData(
-                  transformOptions: {fit: COVER, cropFocus: CENTER}
+                  transformOptions: { fit: COVER, cropFocus: CENTER }
                   width: 180
                   height: 100
                 )
@@ -24,6 +26,7 @@ const IndexPage = () => {
           }
           gatsbyPath(filePath: "/{youTube.slug}")
           snippet {
+            publishedAt(formatString: "DD/MMM/YYYY, h:mm:ss a")
             title
             thumbnails {
               default {
@@ -41,12 +44,24 @@ const IndexPage = () => {
   const treasure = data.allYouTube.nodes;
 
   return (
-    <main style={{maxWidth: "800px", margin: "0 auto"}}>
+    <main style={{ maxWidth: '800px', margin: '0 auto' }}>
       <h1>Nattermob.dev</h1>
-      <p>{data.built.timestamp}</p>
+      <p style={{ color: 'red' }}>
+        <b>Site last built: </b>
+        {data.built.timestamp}
+      </p>
       <ul>
-        {treasure.map((video) => (
-          <li key={video.slug}>
+        {treasure.map((video, index) => (
+          <li key={index}>
+            <br />
+            {
+              <span>
+                <b>{`#${treasure.length - index} `}</b>
+                {video.snippet.publishedAt}
+              </span>
+            }
+            <br />
+            <br />
             <Link to={video.gatsbyPath}>
               <GatsbyImage
                 alt={video.snippet.title}

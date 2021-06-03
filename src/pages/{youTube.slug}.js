@@ -1,21 +1,22 @@
-import React from "react";
-import {graphql, Link} from "gatsby";
-import {GatsbyImage, getImage} from "gatsby-plugin-image";
+import React from 'react';
+import { graphql, Link } from 'gatsby';
+import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 
-import Seo from "../components/Seo";
+import Seo from '../components/seo';
 
-const YouTubePage = ({data: {youTube}}) => {
+const YouTubePage = ({ data: { youTube } }) => {
   const {
     id,
     gatsbyPath,
-    snippet: {title, description, channelTitle},
-    image,
+    snippet: { publishedAt, title, description, channelTitle },
+    image
   } = youTube;
 
   return (
     <Seo path={gatsbyPath} pageTitle={title} pageDescription={description}>
-      <main style={{maxWidth: "800px", margin: "0 auto", padding: "1em"}}>
+      <main style={{ maxWidth: '800px', margin: '0 auto', padding: '1em' }}>
         <Link to="/">← nattermob.dev</Link>
+        <p>{publishedAt}</p>
         <h1>{title}</h1>
         <aside>
           <a href={`https://youtu.be/${id}`} target="_blank" rel="noreferrer">
@@ -36,14 +37,14 @@ const YouTubePage = ({data: {youTube}}) => {
 
 export const query = graphql`
   query($id: String) {
-    youTube(id: {eq: $id}) {
+    youTube(id: { eq: $id }) {
       id
       gatsbyPath(filePath: "/{youTube.slug}")
       image {
         url {
           childImageSharp {
             gatsbyImageData(
-              transformOptions: {fit: COVER, cropFocus: CENTER}
+              transformOptions: { fit: COVER, cropFocus: CENTER }
               width: 1280
               height: 720
             )
@@ -51,6 +52,7 @@ export const query = graphql`
         }
       }
       snippet {
+        publishedAt(formatString: "DD/MMM/YYYY, h:mm:ss a")
         title
         description
         thumbnails {
