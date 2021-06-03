@@ -9,8 +9,7 @@
     "clean": "gatsby clean",
     "serve": "gatsby serve",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prettier": "prettier --config ./.prettierrc.js --ignore-path ./.prettierignore --write \"**/*.{json,js,ts,tsx,mdx}\"",
-    "prepare": "husky install"
+    "prettier": "prettier --config ./.prettierrc.js --ignore-path ./.prettierignore --write \"**/*.{json,js,ts,tsx,mdx}\""
   },
   "repository": {
     "type": "git",
