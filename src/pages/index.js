@@ -45,6 +45,12 @@ const IndexPage = () => {
     <main style={{ maxWidth: "800px", margin: "0 auto" }}>
       <h1>Gatsby Deep Dives with Queen Raae and the Nattermob Pirates</h1>
 
+      <p>
+        To be notified about upcoming streams and other piratical Gatsby
+        content, sign up for{" "}
+        <a href="https://lillylabs.ck.page/f728bde07b">our newsletter</a>.
+      </p>
+
       <h2>The streams:</h2>
 
       <ul>
