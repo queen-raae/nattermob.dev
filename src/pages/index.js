@@ -55,7 +55,6 @@ const IndexPage = () => {
             {
               <span>
                 <b>{`#${treasure.length - index} `}</b>
-                {video.snippet.publishedAt}
               </span>
             }
             <br />

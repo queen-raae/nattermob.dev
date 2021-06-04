@@ -8,7 +8,7 @@ const YouTubePage = ({ data: { youTube } }) => {
   const {
     id,
     gatsbyPath,
-    snippet: { publishedAt, title, description, channelTitle },
+    snippet: { title, description, channelTitle },
     image,
   } = youTube
 
@@ -16,7 +16,6 @@ const YouTubePage = ({ data: { youTube } }) => {
     <Seo path={gatsbyPath} pageTitle={title} pageDescription={description}>
       <main style={{ maxWidth: "800px", margin: "0 auto", padding: "1em" }}>
         <Link to="/">← nattermob.dev</Link>
-        <p>{publishedAt}</p>
         <h1>{title}</h1>
         <aside>
           <a href={`https://youtu.be/${id}`} target="_blank" rel="noreferrer">
@@ -36,7 +35,7 @@ const YouTubePage = ({ data: { youTube } }) => {
 }
 
 export const query = graphql`
-  query ($id: String) {
+  query($id: String) {
     youTube(id: { eq: $id }) {
       id
       gatsbyPath(filePath: "/{youTube.slug}")
