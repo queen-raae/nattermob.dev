@@ -57,7 +57,7 @@ exports.sourceNodes = async ({
     maxResults: 50,
     order: "date",
     type: "video",
-    q: "#GatsbyJS Deep Dive Dives",
+    q: `" · #GatsbyJS Deep Dive"`,
   })
 
   response.data.items.forEach((video) => {
