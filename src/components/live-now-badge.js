@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react"
 
 const LiveNowBadge = () => {
-  const [prefersReduceMotion, setPrefersReduceMotion] = useState(false)
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false)
   const message = "LIVE NOW - youtube.com/raaecodes"
 
   useEffect(() => {
     const reduceQuery = window.matchMedia("(prefers-reduced-motion:reduce)")
     const handleChange = (event) => {
-      setPrefersReduceMotion(!event.matches)
+      setPrefersReducedMotion(!event.matches)
     }
     reduceQuery.addEventListener("change", handleChange)
     return () => {
@@ -36,7 +36,7 @@ const LiveNowBadge = () => {
           🔴
         </span>
         <div style={{ background: "#ff0000" }}>
-          {prefersReduceMotion ? (
+          {prefersReducedMotion ? (
             <span style={{ paddingLeft: "4px" }}>{message}</span>
           ) : (
             <marquee style={{ paddingTop: "4px" }}>{message}</marquee>
