@@ -43,35 +43,36 @@ const IndexPage = () => {
 
   return (
     <main style={{ maxWidth: "800px", margin: "0 auto" }}>
-      <h1>Nattermob.dev</h1>
-      <p style={{ color: "red" }}>
-        <b>Site last built: </b>
-        {data.built.timestamp}
-      </p>
+      <h1>Gatsby Deep Dives with Queen Raae and the Nattermob Pirates</h1>
+
+      <h2>The streams:</h2>
+
       <ul>
         {treasure.map((video, index) => (
           <li key={index}>
-            <br />
-            {
-              <span>
-                <b>{`#${treasure.length - index} `}</b>
-              </span>
-            }
-            <br />
-            <br />
             <Link to={video.gatsbyPath}>
+              <h3>
+                {`#${treasure.length - index} `}{" "}
+                {video.snippet.title
+                  .replace(" · #GatsbyJS Deep Dive", "")
+                  .replace("🔴🍻", "")
+                  .replace("🔴 🍻", "")}
+              </h3>
+
               <GatsbyImage
                 alt={video.snippet.title}
                 image={getImage(video.image.url)}
               />
               <br />
-              {video.snippet.title}
-              <br />
-              <br />
             </Link>
           </li>
         ))}
       </ul>
+
+      <p style={{ color: "red" }}>
+        <b>Site last built: </b>
+        {data.built.timestamp}
+      </p>
     </main>
   )
 }
