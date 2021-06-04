@@ -8,9 +8,7 @@ require("dotenv").config({
   path: `.env.${process.env.NODE_ENV}`,
 })
 
-exports.createSchemaCustomization = ({
-  actions: { createTypes, printTypeDefinitions },
-}) => {
+exports.createSchemaCustomization = ({ actions: { createTypes } }) => {
   createTypes(`
     type youTube implements Node {
       image: youTubeImage
@@ -19,10 +17,6 @@ exports.createSchemaCustomization = ({
       url: File @link(by: "url")
     }
   `)
-
-  // printTypeDefinitions({
-  //   path: "./types.txt",
-  // });
 }
 
 exports.sourceNodes = async ({
