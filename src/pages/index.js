@@ -43,7 +43,20 @@ const IndexPage = () => {
 
   const treasure = orderBy(
     data.allYouTube.nodes,
-    ["snippet.liveBroadcastContent", "snippet.publishedAt"],
+    [
+      ({ snippet }) => {
+        console.log(snippet.liveBroadcastContent)
+        switch (snippet.liveBroadcastContent) {
+          case "upcoming":
+            return 3
+          case "live":
+            return 2
+          default:
+            return 1
+        }
+      },
+      "snippet.publishedAt",
+    ],
     ["desc", "desc"]
   )
 
