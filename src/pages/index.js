@@ -8,9 +8,7 @@ const IndexPage = () => {
       built {
         timestamp(formatString: "DD/MMM/YYYY, h:mm:ss a")
       }
-      allYouTube(
-        filter: { snippet: { liveBroadcastContent: { ne: "upcoming" } } }
-      ) {
+      allYouTube {
         nodes {
           slug
           image {
