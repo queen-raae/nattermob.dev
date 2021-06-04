@@ -1,6 +1,7 @@
 import React from "react"
 import { useStaticQuery, graphql, Link } from "gatsby"
 import { GatsbyImage, getImage } from "gatsby-plugin-image"
+import { orderBy } from "lodash"
 
 const IndexPage = () => {
   const data = useStaticQuery(graphql`
@@ -24,7 +25,8 @@ const IndexPage = () => {
           }
           gatsbyPath(filePath: "/{youTube.slug}")
           snippet {
-            publishedAt(formatString: "DD/MMM/YYYY, h:mm:ss a")
+            publishedAt
+            liveBroadcastContent
             title
             thumbnails {
               default {
@@ -39,7 +41,11 @@ const IndexPage = () => {
     }
   `)
 
-  const treasure = data.allYouTube.nodes
+  const treasure = orderBy(
+    data.allYouTube.nodes,
+    ["snippet.liveBroadcastContent", "snippet.publishedAt"],
+    ["desc", "desc"]
+  )
 
   return (
     <main style={{ maxWidth: "800px", margin: "0 auto" }}>
