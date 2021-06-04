@@ -2,7 +2,7 @@ import React from "react"
 import { graphql, Link } from "gatsby"
 import { GatsbyImage, getImage } from "gatsby-plugin-image"
 
-import Seo from "../components/Seo"
+import Seo from "../components/seo"
 
 const YouTubePage = ({ data: { youTube } }) => {
   const {
@@ -51,6 +51,7 @@ export const query = graphql`
         }
       }
       snippet {
+        publishedAt(formatString: "DD/MMM/YYYY, h:mm:ss a")
         title
         description
         thumbnails {

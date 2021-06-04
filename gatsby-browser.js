@@ -1,6 +1,6 @@
 import React, { Fragment } from "react"
 
-import Seo from "./src/components/Seo"
+import Seo from "./src/components/seo"
 import LiveNowMarquee from "./src/components/live-now-marquee"
 
 export const wrapPageElement = ({ element }) => {
