@@ -5,8 +5,13 @@ const LiveNowBadge = () => {
   const message = "LIVE NOW - youtube.com/raaecodes"
 
   useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion:reduce)").matches) {
-      setPrefersReduceMotion(true)
+    const reduceQuery = window.matchMedia("(prefers-reduced-motion:reduce)")
+    const handleChange = (event) => {
+      setPrefersReduceMotion(!event.matches)
+    }
+    reduceQuery.addEventListener("change", handleChange)
+    return () => {
+      reduceQuery.removeEventListener("change", handleChange)
     }
   }, [])
 
@@ -32,7 +37,7 @@ const LiveNowBadge = () => {
         </span>
         <div style={{ background: "#ff0000" }}>
           {prefersReduceMotion ? (
-            <span>{message}</span>
+            <span style={{ paddingLeft: "4px" }}>{message}</span>
           ) : (
             <marquee style={{ paddingTop: "4px" }}>{message}</marquee>
           )}
