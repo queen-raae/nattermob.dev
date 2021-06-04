@@ -8,9 +8,7 @@ require("dotenv").config({
   path: `.env.${process.env.NODE_ENV}`,
 })
 
-exports.createSchemaCustomization = ({
-  actions: { createTypes, printTypeDefinitions },
-}) => {
+exports.createSchemaCustomization = ({ actions: { createTypes } }) => {
   createTypes(`
     type youTube implements Node {
       image: youTubeImage
@@ -19,10 +17,6 @@ exports.createSchemaCustomization = ({
       url: File @link(by: "url")
     }
   `)
-
-  // printTypeDefinitions({
-  //   path: "./types.txt",
-  // });
 }
 
 exports.sourceNodes = async ({
@@ -38,7 +32,7 @@ exports.sourceNodes = async ({
   console.log("///// TIMESTAMPS ////", timestamp)
 
   createNode({
-    timestamp,
+    timestamp: date,
     id: "timestamp",
     internal: {
       type: "built",
@@ -54,10 +48,10 @@ exports.sourceNodes = async ({
   const response = await youtube.search.list({
     channelId: "UCDlrzlRdM1vGr8nO708KFmQ",
     part: "snippet",
-    maxResults: 10,
+    maxResults: 50,
     order: "date",
     type: "video",
-    q: "#Nattermob",
+    q: `" · #GatsbyJS Deep Dive"`,
   })
 
   response.data.items.forEach((video) => {
