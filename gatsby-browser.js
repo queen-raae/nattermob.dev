@@ -1,5 +1,5 @@
-import React from "react"
-import { Fragment } from "react"
+import React, { Fragment } from "react"
+
 import LiveNowBadge from "./src/components/live-now-badge"
 import Seo from "./src/components/seo"
 
