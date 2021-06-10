@@ -1,4 +1,7 @@
 module.exports = {
+  flags: {
+    FUNCTIONS: true,
+  },
   siteMetadata: {
     title: "Gatsby Deep Dives with Queen Raae and the Nattermob Pirates",
     domain: "https://nattermob.dev",
