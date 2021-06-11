@@ -42,7 +42,7 @@ exports.sourceNodes = async ({
 
   const youtube = google.youtube({
     version: "v3",
-    auth: process.env.GOOGLE_API_KEY,
+    auth: process.env.GOOGLE_API_KEY_CLIENT,
   })
 
   const response = await youtube.search.list({
