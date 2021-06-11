@@ -62,8 +62,10 @@ const LiveNowBadge = () => {
 
   useEffect(() => {
     const reduceQuery = window.matchMedia("(prefers-reduced-motion:reduce)")
+    setPrefersReducedMotion(reduceQuery.matches)
+
     const handleChange = (event) => {
-      setPrefersReducedMotion(!event.matches)
+      setPrefersReducedMotion(event.matches)
     }
     reduceQuery.addEventListener("change", handleChange)
     return () => {
