@@ -3,7 +3,7 @@ const { google } = require("googleapis")
 export default async function handler(req, res) {
   const youtube = google.youtube({
     version: "v3",
-    auth: process.env.GOOGLE_API_KEY,
+    auth: process.env.GOOGLE_API_KEY_CLIENT,
   })
 
   try {
@@ -15,6 +15,7 @@ export default async function handler(req, res) {
       type: "video",
       q: `" · #GatsbyJS Deep Dive"`,
     })
+
     const areWeLive = response.data.items.some(
       (video) => video.snippet.liveBroadcastContent === "live"
     )

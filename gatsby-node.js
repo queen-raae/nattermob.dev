@@ -31,6 +31,16 @@ exports.sourceNodes = async ({
 
   console.log("///// TIMESTAMPS ////", timestamp)
 
+  console.log(
+    "process.env.GOOGLE_API_KEY_SERVER: ",
+    process.env.GOOGLE_API_KEY_SERVER
+  )
+
+  console.log(
+    "process.env.GOOGLE_API_KEY_CLIENT: ",
+    process.env.GOOGLE_API_KEY_CLIENT
+  )
+
   createNode({
     timestamp: date,
     id: "timestamp",
@@ -42,7 +52,7 @@ exports.sourceNodes = async ({
 
   const youtube = google.youtube({
     version: "v3",
-    auth: process.env.GOOGLE_API_KEY,
+    auth: process.env.GOOGLE_API_KEY_SERVER,
   })
 
   const response = await youtube.search.list({
