@@ -73,8 +73,6 @@ const LiveNowBadge = () => {
     }
   }, [isMounted])
 
-  console.log({ hasError, isLoading, areWeLive })
-
   return (
     <Fragment>
       {isMounted ? (
