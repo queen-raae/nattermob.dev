@@ -45,7 +45,7 @@ exports.sourceNodes = async ({
     auth: process.env.GOOGLE_API_KEY_CLIENT,
   })
 
-  const response = await youtube.playlistItems.list({
+  const playlistItemsResponse = await youtube.playlistItems.list({
     playlistId: "PL9W-8hhRoLoN7axEFJQ17rJvk2KTiM2GP",
     part: "snippet",
     maxResults: 50,
@@ -53,7 +53,16 @@ exports.sourceNodes = async ({
     type: "video",
   })
 
-  response.data.items.forEach((video) => {
+  const ids = playlistItemsResponse.data.items.map(
+    (video) => video.snippet.resourceId.videoId
+  )
+
+  const videosResponse = await youtube.videos.list({
+    id: ids.join(","),
+    part: "snippet,liveStreamingDetails",
+  })
+
+  videosResponse.data.items.forEach((video) => {
     createNode({
       ...video,
       id: video.id,
