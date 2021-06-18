@@ -45,20 +45,28 @@ exports.sourceNodes = async ({
     auth: process.env.GOOGLE_API_KEY_CLIENT,
   })
 
-  const response = await youtube.search.list({
-    channelId: "UCDlrzlRdM1vGr8nO708KFmQ",
+  const playlistItemsResponse = await youtube.playlistItems.list({
+    playlistId: "PL9W-8hhRoLoN7axEFJQ17rJvk2KTiM2GP",
     part: "snippet",
     maxResults: 50,
     order: "date",
     type: "video",
-    q: `" · #GatsbyJS Deep Dive"`,
   })
 
-  response.data.items.forEach((video) => {
+  const ids = playlistItemsResponse.data.items.map(
+    (video) => video.snippet.resourceId.videoId
+  )
+
+  const videosResponse = await youtube.videos.list({
+    id: ids.join(","),
+    part: "snippet,liveStreamingDetails",
+  })
+
+  videosResponse.data.items.forEach((video) => {
     createNode({
       ...video,
-      id: video.id.videoId,
-      slug: slugify(video.id.videoId),
+      id: video.id,
+      slug: slugify(video.id),
       internal: {
         type: YOUTUBE,
         contentDigest: createContentDigest(video),
@@ -76,7 +84,7 @@ exports.onCreateNode = async ({
 }) => {
   if (node.internal.type === YOUTUBE) {
     node.image = await createRemoteFileNode({
-      url: node.snippet.thumbnails.high.url,
+      url: node.snippet.thumbnails.maxres.url,
       parentNodeId: node.id,
       createNode,
       createNodeId,

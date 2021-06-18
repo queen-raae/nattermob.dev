@@ -8,7 +8,9 @@ const IndexPage = () => {
       built {
         timestamp(formatString: "DD/MMM/YYYY, h:mm:ss a")
       }
-      allYouTube {
+      allYouTube(
+        sort: { fields: liveStreamingDetails___scheduledStartTime, order: DESC }
+      ) {
         nodes {
           slug
           image {
@@ -26,6 +28,9 @@ const IndexPage = () => {
           snippet {
             publishedAt
             title
+          }
+          liveStreamingDetails {
+            scheduledStartTime
           }
         }
       }
@@ -51,8 +56,15 @@ const IndexPage = () => {
           <li key={index}>
             <Link to={video.gatsbyPath}>
               <h3>
-                {`#${treasure.length - index} `} {video.snippet.title}
+                {`#${treasure.length - index} `} {video.snippet.title}{" "}
               </h3>
+
+              <p>
+                @{" "}
+                {new Date(
+                  video.liveStreamingDetails.scheduledStartTime
+                ).toLocaleString("en-GB")}
+              </p>
 
               <GatsbyImage
                 alt={video.snippet.title}

@@ -9,6 +9,7 @@ const YouTubePage = ({ data: { youTube } }) => {
     id,
     gatsbyPath,
     snippet: { title, description, channelTitle },
+    liveStreamingDetails: { scheduledStartTime },
     image,
   } = youTube
 
@@ -21,21 +22,21 @@ const YouTubePage = ({ data: { youTube } }) => {
           <a href={`https://youtu.be/${id}`} target="_blank" rel="noreferrer">
             <GatsbyImage alt={title} image={getImage(image.url)} />
           </a>
+          <p>@ {new Date(scheduledStartTime).toLocaleString("en-GB")}</p>
           <p>
             <a href={`https://youtu.be/${id}`} target="_blank" rel="noreferrer">
-              View on YouTube
+              View on YouTube ({channelTitle})
             </a>
           </p>
-          <p>{channelTitle}</p>
         </aside>
-        <p>{description}</p>
+        <pre style={{ whiteSpace: "pre-wrap" }}>{description}</pre>
       </main>
     </Seo>
   )
 }
 
 export const query = graphql`
-  query($id: String) {
+  query ($id: String) {
     youTube(id: { eq: $id }) {
       id
       gatsbyPath(filePath: "/{youTube.slug}")
@@ -62,6 +63,9 @@ export const query = graphql`
           }
         }
         channelTitle
+      }
+      liveStreamingDetails {
+        scheduledStartTime
       }
     }
   }
