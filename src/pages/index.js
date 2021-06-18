@@ -56,8 +56,15 @@ const IndexPage = () => {
           <li key={index}>
             <Link to={video.gatsbyPath}>
               <h3>
-                {`#${treasure.length - index} `} {video.snippet.title}
+                {`#${treasure.length - index} `} {video.snippet.title}{" "}
               </h3>
+
+              <p>
+                @{" "}
+                {new Date(
+                  video.liveStreamingDetails.scheduledStartTime
+                ).toLocaleString("en-GB")}
+              </p>
 
               <GatsbyImage
                 alt={video.snippet.title}
