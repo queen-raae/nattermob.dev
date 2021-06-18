@@ -1,7 +1,6 @@
 import React from "react"
 import { useStaticQuery, graphql, Link } from "gatsby"
 import { GatsbyImage, getImage } from "gatsby-plugin-image"
-import { orderBy } from "lodash"
 
 const IndexPage = () => {
   const data = useStaticQuery(graphql`
@@ -26,38 +25,14 @@ const IndexPage = () => {
           gatsbyPath(filePath: "/{youTube.slug}")
           snippet {
             publishedAt
-            liveBroadcastContent
             title
-            thumbnails {
-              default {
-                url
-                height
-                width
-              }
-            }
           }
         }
       }
     }
   `)
 
-  const treasure = orderBy(
-    data.allYouTube.nodes,
-    [
-      ({ snippet }) => {
-        switch (snippet.liveBroadcastContent) {
-          case "upcoming":
-            return 3
-          case "live":
-            return 2
-          default:
-            return 1
-        }
-      },
-      "snippet.publishedAt",
-    ],
-    ["desc", "desc"]
-  )
+  const treasure = data.allYouTube.nodes
 
   return (
     <main style={{ maxWidth: "800px", margin: "0 auto" }}>
@@ -76,11 +51,7 @@ const IndexPage = () => {
           <li key={index}>
             <Link to={video.gatsbyPath}>
               <h3>
-                {`#${treasure.length - index} `}{" "}
-                {video.snippet.title
-                  .replace(" · #GatsbyJS Deep Dive", "")
-                  .replace("🔴🍻", "")
-                  .replace("🔴 🍻", "")}
+                {`#${treasure.length - index} `} {video.snippet.title}
               </h3>
 
               <GatsbyImage
