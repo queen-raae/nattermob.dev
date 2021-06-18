@@ -8,7 +8,9 @@ const IndexPage = () => {
       built {
         timestamp(formatString: "DD/MMM/YYYY, h:mm:ss a")
       }
-      allYouTube {
+      allYouTube(
+        sort: { fields: liveStreamingDetails___scheduledStartTime, order: DESC }
+      ) {
         nodes {
           slug
           image {
@@ -26,6 +28,9 @@ const IndexPage = () => {
           snippet {
             publishedAt
             title
+          }
+          liveStreamingDetails {
+            scheduledStartTime
           }
         }
       }
