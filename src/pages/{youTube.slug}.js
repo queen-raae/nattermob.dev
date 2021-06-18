@@ -29,7 +29,7 @@ const YouTubePage = ({ data: { youTube } }) => {
             </a>
           </p>
         </aside>
-        <p>{description}</p>
+        <pre style={{ whiteSpace: "pre-wrap" }}>{description}</pre>
       </main>
     </Seo>
   )
