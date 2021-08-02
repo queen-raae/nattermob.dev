@@ -8,7 +8,11 @@ const RootElement = ({ children }) => {
     <Auth0Provider
       domain={process.env.AUTH0_DOMAIN}
       clientId={process.env.AUTH0_CLIENT_ID}
-      redirectUri={`${window.location.origin}/profile`}
+      redirectUri={
+        typeof window !== "undefined"
+          ? `${window.location.origin}/profile`
+          : "http://localhost:8000"
+      }
     >
       <Header />
       {children}
