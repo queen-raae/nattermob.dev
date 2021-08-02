@@ -8,6 +8,7 @@ const Header = () => {
   return (
     <div
       style={{
+        border: "1px solid red",
         display: "flex",
         justifyContent: "flex-end",
       }}
