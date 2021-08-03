@@ -10,7 +10,7 @@ const RootElement = ({ children }) => {
       clientId={process.env.AUTH0_CLIENT_ID}
       redirectUri={
         typeof window !== "undefined"
-          ? `${window.location.origin}/profile`
+          ? `${window.location.origin}/app/profile`
           : "http://localhost:8000"
       }
     >
