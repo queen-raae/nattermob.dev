@@ -5,7 +5,7 @@ import { useAuth0 } from "@auth0/auth0-react"
 const PrivateRoute = ({ component: Component, location, ...rest }) => {
   const { isAuthenticated } = useAuth0()
 
-  if (!isAuthenticated && location.pathname !== "/app/profile") {
+  if (!isAuthenticated) {
     navigate("/")
     return null
   }

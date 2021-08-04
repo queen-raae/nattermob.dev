@@ -2,6 +2,7 @@ import React from "react"
 import { Auth0Provider } from "@auth0/auth0-react"
 
 import Header from "../components/header"
+import LiveNowBadge from "../components/live-now-badge"
 
 const RootElement = ({ children }) => {
   return (
@@ -15,6 +16,7 @@ const RootElement = ({ children }) => {
       }
     >
       <Header />
+      <LiveNowBadge />
       {children}
     </Auth0Provider>
   )
