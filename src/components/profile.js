@@ -16,9 +16,6 @@ const Profile = () => {
   const handleSubmit = async () => {
     setIsSubmitting(true)
     try {
-      // @TODO accessToken should be stored in local storage and collected silently on app load
-      // this would mean it can be used on any api request
-
       const accessToken = await getAccessTokenSilently({
         audience: process.env.GATSBY_AUTH0_AUDIENCE,
         scope: process.env.GATSBY_AUTH0_SCOPE,
