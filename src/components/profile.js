@@ -2,11 +2,19 @@ import React, { Fragment, useState } from "react"
 import { useAuth0 } from "@auth0/auth0-react"
 import axios from "axios"
 
+import { useLocalStorage } from "../hooks"
+
 const Profile = () => {
   const { user, isLoading, getAccessTokenSilently } = useAuth0()
-  const [hasSubmitted, setHasSubmitted] = useState(false)
+
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [hasSubmitted, setHasSubmitted] = useLocalStorage(
+    "nattermob-stowaway-submitted",
+    false
+  )
 
   const handleSubmit = async () => {
+    setIsSubmitting(true)
     try {
       // @TODO accessToken should be stored in local storage and collected silently on app load
       // this would mean it can be used on any api request
@@ -29,7 +37,7 @@ const Profile = () => {
       )
 
       console.log({ response })
-      // @TODO we need to verify against the db if a user has previously added themselves as a stowaway
+      setIsSubmitting(false)
       setHasSubmitted(true)
     } catch (error) {
       console.error({ error })
@@ -47,11 +55,13 @@ const Profile = () => {
           <h3>user</h3>
           <pre style={{ fontSize: 12 }}>{JSON.stringify(user, null, 2)}</pre>
           {hasSubmitted ? (
-            <p>Hoory! You're now a stowaway</p>
+            <h4>Hoory! You're now a stowaway</h4>
           ) : (
             <Fragment>
-              <p>To become a stowaway submit your details</p>
-              <button onClick={handleSubmit}>Submit</button>
+              <h4>To become a stowaway submit your details</h4>
+              <button disabled={isSubmitting} onClick={handleSubmit}>
+                {isSubmitting ? "Submitting..." : "Submit"}
+              </button>
             </Fragment>
           )}
         </Fragment>
