@@ -20,7 +20,9 @@ const Header = () => {
         <Link to="/">nattermob.dev</Link>
       </div>
       <div>
-        {!isLoading ? (
+        {isLoading ? (
+          <div>Loading...</div>
+        ) : (
           <Fragment>
             {isAuthenticated ? (
               <div
@@ -42,7 +44,7 @@ const Header = () => {
               <button onClick={() => loginWithRedirect()}>Log In</button>
             )}
           </Fragment>
-        ) : null}
+        )}
       </div>
     </div>
   )
