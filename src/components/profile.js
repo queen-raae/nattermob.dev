@@ -1,48 +1,19 @@
-import React, { Fragment, useState, useEffect } from "react"
+import React, { Fragment, useState } from "react"
 import { useAuth0 } from "@auth0/auth0-react"
 import axios from "axios"
 
 const Profile = () => {
   const { user, isLoading, getAccessTokenSilently } = useAuth0()
-  // const [userMetadata, setUserMetadata] = useState(null)
-
-  // useEffect(() => {
-  //   const getUserMetadata = async () => {
-  //     const domain = "nattermob.eu.auth0.com"
-
-  //     try {
-  //       const accessToken = await getAccessTokenSilently({
-  //         audience: `https://${domain}/api/v2/`,
-  //         scope: "read:current_user",
-  //       })
-
-  //       const userDetailsByIdUrl = `https://${domain}/api/v2/users/${user.sub}`
-
-  //       const { data } = await axios.get(userDetailsByIdUrl, {
-  //         headers: {
-  //           Authorization: `Bearer ${accessToken}`,
-  //         },
-  //       })
-
-  //       // await console.log(user.sub)
-  //       // await console.log(accessToken)
-  //       // await console.log(data)
-
-  //       setUserMetadata(data)
-  //     } catch (e) {
-  //       console.log(e.message)
-  //     }
-  //   }
-
-  //   getUserMetadata()
-  // }, [getAccessTokenSilently, user?.sub])
+  const [hasSubmitted, setHasSubmitted] = useState(false)
 
   const handleSubmit = async () => {
-    console.log("handleSubmit")
     try {
+      // @TODO accessToken should be stored in local storage and collected silently on app load
+      // this would mean it can be used on any api request
+
       const accessToken = await getAccessTokenSilently({
         audience: process.env.GATSBY_AUTH0_AUDIENCE,
-        scope: "read:current_user",
+        scope: process.env.GATSBY_AUTH0_SCOPE,
       })
 
       const response = await axios.post(
@@ -58,6 +29,8 @@ const Profile = () => {
       )
 
       console.log({ response })
+      // @TODO we need to verify against the db if a user has previously added themselves as a stowaway
+      setHasSubmitted(true)
     } catch (error) {
       console.error({ error })
     }
@@ -73,16 +46,14 @@ const Profile = () => {
           <h2>{`Ahoy ${user.nickname}`}</h2>
           <h3>user</h3>
           <pre style={{ fontSize: 12 }}>{JSON.stringify(user, null, 2)}</pre>
-          {/* <h3>user metadata</h3>
-          {userMetadata ? (
-            <pre style={{ fontSize: 8 }}>
-              {JSON.stringify(userMetadata, null, 2)}
-            </pre>
+          {hasSubmitted ? (
+            <p>Hoory! You're now a stowaway</p>
           ) : (
-            "No user metadata defined"
-          )} */}
-          <p>To become a stowaway submit your details</p>
-          <button onClick={handleSubmit}>Submit</button>
+            <Fragment>
+              <p>To become a stowaway submit your details</p>
+              <button onClick={handleSubmit}>Submit</button>
+            </Fragment>
+          )}
         </Fragment>
       )}
     </Fragment>
