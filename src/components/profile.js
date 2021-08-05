@@ -28,6 +28,7 @@ const Profile = () => {
         "/api/nattermob-auth",
         {
           user: user,
+          date: new Date(),
         },
         {
           headers: {
@@ -38,7 +39,9 @@ const Profile = () => {
 
       console.log({ response })
       setIsSubmitting(false)
-      setHasSubmitted(true)
+      if (process.env.NODE_ENV === "production") {
+        setHasSubmitted(true)
+      }
     } catch (error) {
       console.error({ error })
     }
