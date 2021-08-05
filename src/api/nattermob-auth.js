@@ -1,5 +1,10 @@
 const jwt = require("express-jwt")
 const jwks = require("jwks-rsa")
+const faunadb = require("faunadb")
+
+const q = faunadb.query
+
+const client = new faunadb.Client({ secret: process.env.FAUNA_KEY })
 
 const auth0Secret = jwks.expressJwtSecret({
   cache: true,
@@ -27,15 +32,20 @@ const runAuthMiddleware = async (req, res) => {
 }
 
 export default async function handler(req, res) {
-  const { user } = req.body
+  const { user, date } = req.body
 
   try {
     await runAuthMiddleware(req, res)
 
-    console.log("Do something with the user details")
-    console.log(JSON.stringify(user, null, 2))
+    await client.query(
+      q.Create(q.Collection(`stowaways_${process.env.NODE_ENV}`), {
+        data: { user: user, date: date },
+      })
+    )
 
-    res.status(200).json({ message: "All ok!" })
+    setTimeout(() => {
+      res.status(200).json({ message: "User added ok!" })
+    }, 500)
   } catch (error) {
     res.status(500).json({
       message: error.message,
