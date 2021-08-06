@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react"
-import { Fragment } from "react"
+import React, { Fragment, useState, useEffect } from "react"
+import { useAuth0 } from "@auth0/auth0-react"
+import axios from "axios"
 
 const LiveNowContent = ({
   prefersReducedMotion,
@@ -37,28 +38,33 @@ const LiveNowBadge = () => {
   const errorMessage = "Blast! There's been an error"
   const loadingMessage = "Loading..."
 
+  const { getAccessTokenSilently } = useAuth0()
+
   useEffect(() => {
-    fetch("/api/are-we-live")
-      .then((response) => {
-        if (response.status >= 200 && response.status < 299) {
-          return response.json()
-        } else {
-          throw Error(response.message)
-        }
+    ;(async () => {
+      const accessToken = await getAccessTokenSilently({
+        audience: process.env.GATSBY_AUTH0_AUDIENCE,
+        scope: process.env.GATSBY_AUTH0_SCOPE,
       })
-      .then((response) => {
-        console.log(response)
-        setAreWeLive(response.areWeLive)
+
+      try {
+        const response = await axios.post("/api/are-we-live", null, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        })
+        console.log(response.data)
+        setAreWeLive(response.data.areWeLive)
         setIsLoading(false)
-      })
-      .catch((error) => {
+      } catch (error) {
         console.log(error)
         setHasError(true)
         setIsLoading(false)
-      })
+      }
+    })()
 
     setIsMounted(true)
-  }, [])
+  }, [getAccessTokenSilently])
 
   useEffect(() => {
     const reduceQuery = window.matchMedia("(prefers-reduced-motion:reduce)")

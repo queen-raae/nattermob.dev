@@ -1,4 +1,29 @@
 const { google } = require("googleapis")
+const jwt = require("express-jwt")
+const jwks = require("jwks-rsa")
+
+const jwtCheck = jwt({
+  secret: jwks.expressJwtSecret({
+    cache: true,
+    rateLimit: true,
+    jwksRequestsPerMinute: 5,
+    jwksUri: `https://${process.env.GATSBY_AUTH0_DOMAIN}/.well-known/jwks.json`,
+  }),
+  audience: process.env.GATSBY_AUTH0_AUDIENCE,
+  issuer: `https://${process.env.GATSBY_AUTH0_DOMAIN}/`,
+  algorithms: ["RS256"],
+})
+
+const checkJwtMiddleware = async (req, res) => {
+  await new Promise((resolve, reject) => {
+    jwtCheck(req, res, (result) => {
+      if (result instanceof Error) {
+        reject(result)
+      }
+      resolve(result)
+    })
+  })
+}
 
 export default async function handler(req, res) {
   const youtube = google.youtube({
@@ -8,6 +33,8 @@ export default async function handler(req, res) {
 
   try {
     // throw Error("Do not hit YOUTUBE")
+
+    await checkJwtMiddleware(req, res)
 
     const response = await youtube.playlistItems.list({
       playlistId: "PL9W-8hhRoLoN7axEFJQ17rJvk2KTiM2GP",
