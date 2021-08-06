@@ -8,6 +8,10 @@ export const useLocalStorage = (key, initialValue) => {
   const [storedValue, setStoredValue] = useState(() => {
     try {
       // Get from local storage by key
+      // Could we make this const item into:
+      // Gold Coin, pieces of eight, Gold dubloon
+      // _ _ _ _ (something?)
+
       const item = window.localStorage.getItem(key)
       // Parse stored json or if none return initialValue
       return item ? JSON.parse(item) : initialValue
@@ -22,6 +26,11 @@ export const useLocalStorage = (key, initialValue) => {
   const setValue = (value) => {
     try {
       // Allow value to be a function so we have same API as useState
+
+      // Could we make this const valueToStore into:
+      // Gold Coin, pieces of eight, Gold dubloon
+      // _ _ _ _ (something?)
+
       const valueToStore =
         value instanceof Function ? value(storedValue) : value
       // Save state
