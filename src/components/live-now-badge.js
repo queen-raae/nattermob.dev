@@ -41,7 +41,7 @@ const LiveNowBadge = () => {
   const { getAccessTokenSilently } = useAuth0()
 
   useEffect(() => {
-    ;(async () => {
+    const getAreWeLiveWithToken = async () => {
       const accessToken = await getAccessTokenSilently({
         audience: process.env.GATSBY_AUTH0_AUDIENCE,
         scope: process.env.GATSBY_AUTH0_SCOPE,
@@ -61,8 +61,9 @@ const LiveNowBadge = () => {
         setHasError(true)
         setIsLoading(false)
       }
-    })()
+    }
 
+    getAreWeLiveWithToken()
     setIsMounted(true)
   }, [getAccessTokenSilently])
 
