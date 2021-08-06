@@ -23,7 +23,7 @@ const Profile = () => {
       })
 
       const response = await axios.post(
-        "/api/nattermob-auth",
+        "/api/add-stowaway",
         {
           user: user,
           date: new Date(),
