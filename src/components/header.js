@@ -16,18 +16,17 @@ const Header = () => {
         justifyContent: "space-between",
       }}
     >
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "auto auto",
-          gridGap: 8,
-        }}
-      >
+      <div>
         <Link to="/">nattermob.dev</Link>
-        <Link to="/stowaways">stowaways</Link>
       </div>
       <div>
         {isLoading ? (
+          /*
+             Could we make this "Loading..." into:
+             "Boarding"
+             ""
+             _ _ _ _ (something?)
+          */
           <div>Loading...</div>
         ) : (
           <Fragment>
@@ -48,6 +47,12 @@ const Header = () => {
                 </button>
               </div>
             ) : (
+              /*
+                 Could we make this >Log In< into:
+                 "Come aboard!"
+                 ""
+                _ _ _ _ (something?)
+              */
               <button onClick={() => loginWithRedirect()}>Log In</button>
             )}
           </Fragment>
