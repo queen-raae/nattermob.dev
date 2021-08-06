@@ -1,7 +1,7 @@
-import React, { Fragment } from "react"
-
-import LiveNowBadge from "./src/components/live-now-badge"
+import React from "react"
+import { Auth0Provider } from "@auth0/auth0-react"
 import Seo from "./src/components/seo"
+import Header from "./src/components/header"
 
 export const wrapPageElement = ({ element }) => {
   return <Seo>{element}</Seo>
@@ -9,9 +9,13 @@ export const wrapPageElement = ({ element }) => {
 
 export const wrapRootElement = ({ element }) => {
   return (
-    <Fragment>
-      <LiveNowBadge />
+    <Auth0Provider
+      domain="nattermob.eu.auth0.com"
+      clientId="VBIk4TkMp0pFgmAcI1F9ZUcUkIb4lh6V"
+      redirectUri={window.location.origin}
+    >
+      <Header />
       {element}
-    </Fragment>
+    </Auth0Provider>
   )
 }
