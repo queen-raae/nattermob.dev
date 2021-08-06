@@ -9,7 +9,7 @@ export default async function handler(req, res) {
   try {
     // throw Error("Do not hit YOUTUBE")
 
-    const response = await youtube.playlistItems.list({
+    const playlistItemsResponse = await youtube.playlistItems.list({
       playlistId: "PL9W-8hhRoLoN7axEFJQ17rJvk2KTiM2GP",
       part: "snippet",
       maxResults: 50,
@@ -17,7 +17,16 @@ export default async function handler(req, res) {
       type: "video",
     })
 
-    const areWeLive = response.data.items.some(
+    const ids = playlistItemsResponse.data.items.map(
+      (video) => video.snippet.resourceId.videoId
+    )
+
+    const videosResponse = await youtube.videos.list({
+      id: ids.join(","),
+      part: "snippet",
+    })
+
+    const areWeLive = videosResponse.data.items.some(
       (video) => video.snippet.liveBroadcastContent === "live"
     )
 
