@@ -16,8 +16,15 @@ const Header = () => {
         justifyContent: "space-between",
       }}
     >
-      <div>
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "auto auto",
+          gridGap: 8,
+        }}
+      >
         <Link to="/">nattermob.dev</Link>
+        <Link to="/stowaways">stowaways</Link>
       </div>
       <div>
         {isLoading ? (
