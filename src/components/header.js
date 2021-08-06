@@ -20,12 +20,12 @@ const Header = () => {
         <div>Nattermob.dev</div>
         <div>
           {isLoading ? (
-            <div>
+            <button disabled>
               Loading...{" "}
               <span role="img" aria-label="parrot">
                 🦜
               </span>
-            </div>
+            </button>
           ) : (
             <Fragment>
               {isAuthenticated ? (
