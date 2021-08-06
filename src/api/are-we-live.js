@@ -9,13 +9,12 @@ export default async function handler(req, res) {
   try {
     // throw Error("Do not hit YOUTUBE")
 
-    const response = await youtube.search.list({
-      channelId: "UCDlrzlRdM1vGr8nO708KFmQ",
+    const response = await youtube.playlistItems.list({
+      playlistId: "PL9W-8hhRoLoN7axEFJQ17rJvk2KTiM2GP",
       part: "snippet",
       maxResults: 50,
       order: "date",
       type: "video",
-      q: `" · #GatsbyJS Deep Dive"`,
     })
 
     const areWeLive = response.data.items.some(
