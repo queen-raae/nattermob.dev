@@ -8,6 +8,7 @@ const Profile = () => {
   const { user, isLoading, getAccessTokenSilently } = useAuth0()
 
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [hasError, setHasError] = useState("")
   const [hasSubmitted, setHasSubmitted] = useLocalStorage(
     "nattermob-stowaway-submitted",
     false
@@ -34,13 +35,12 @@ const Profile = () => {
         }
       )
 
-      console.log({ response })
       setIsSubmitting(false)
-      if (process.env.NODE_ENV === "production") {
-        setHasSubmitted(true)
-      }
+      // if (process.env.NODE_ENV === "production") {
+      setHasSubmitted(true)
+      // }
     } catch (error) {
-      console.error({ error })
+      setHasError(error.message)
     }
   }
 
@@ -64,6 +64,7 @@ const Profile = () => {
               </button>
             </Fragment>
           )}
+          <p>{hasError}</p>
         </Fragment>
       )}
     </Fragment>

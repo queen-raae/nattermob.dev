@@ -6,21 +6,19 @@ const q = faunadb.query
 
 const client = new faunadb.Client({ secret: process.env.FAUNA_KEY })
 
-const auth0Secret = jwks.expressJwtSecret({
-  cache: true,
-  rateLimit: true,
-  jwksRequestsPerMinute: 5,
-  jwksUri: `https://${process.env.GATSBY_AUTH0_DOMAIN}/.well-known/jwks.json`,
-})
-
 const jwtCheck = jwt({
-  secret: auth0Secret,
+  secret: jwks.expressJwtSecret({
+    cache: true,
+    rateLimit: true,
+    jwksRequestsPerMinute: 5,
+    jwksUri: `https://${process.env.GATSBY_AUTH0_DOMAIN}/.well-known/jwks.json`,
+  }),
   audience: process.env.GATSBY_AUTH0_AUDIENCE,
   issuer: `https://${process.env.GATSBY_AUTH0_DOMAIN}/`,
   algorithms: ["RS256"],
 })
 
-const runAuthMiddleware = async (req, res) => {
+const checkJwtMiddleware = async (req, res) => {
   await new Promise((resolve, reject) => {
     jwtCheck(req, res, (result) => {
       if (result instanceof Error) {
@@ -35,7 +33,7 @@ export default async function handler(req, res) {
   const { user, date } = req.body
 
   try {
-    await runAuthMiddleware(req, res)
+    await checkJwtMiddleware(req, res)
 
     await client.query(
       q.Create(q.Collection(`stowaways_${process.env.NODE_ENV}`), {
