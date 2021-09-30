@@ -24,7 +24,6 @@ const IndexPage = () => {
               }
             }
           }
-          gatsbyPath(filePath: "/{youTube.slug}")
           snippet {
             publishedAt
             title
@@ -52,28 +51,30 @@ const IndexPage = () => {
       <h2>The streams:</h2>
 
       <ul>
-        {treasure.map((video, index) => (
-          <li key={index}>
-            <Link to={video.gatsbyPath}>
-              <h3>
-                {`#${treasure.length - index} `} {video.snippet.title}{" "}
-              </h3>
+        {treasure.map((video, index) => {
+          return (
+            <li key={index}>
+              <Link to={video.slug}>
+                <h3>
+                  {`#${treasure.length - index} `} {video.snippet.title}{" "}
+                </h3>
 
-              <p>
-                @{" "}
-                {new Date(
-                  video.liveStreamingDetails.scheduledStartTime
-                ).toLocaleString("en-GB")}
-              </p>
+                <p>
+                  @{" "}
+                  {new Date(
+                    video.liveStreamingDetails.scheduledStartTime
+                  ).toLocaleString("en-GB")}
+                </p>
 
-              <GatsbyImage
-                alt={video.snippet.title}
-                image={getImage(video.image.url)}
-              />
-              <br />
-            </Link>
-          </li>
-        ))}
+                <GatsbyImage
+                  alt={video.snippet.title}
+                  image={getImage(video.image.url)}
+                />
+                <br />
+              </Link>
+            </li>
+          )
+        })}
       </ul>
 
       <p style={{ color: "red" }}>
