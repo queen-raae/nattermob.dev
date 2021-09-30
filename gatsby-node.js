@@ -122,15 +122,15 @@ exports.createPages = async ({
   }
 
   const youTubePageTemplate = path.resolve(
-    `src/templates/youtube-page-template.js`
+    "./src/templates/youtube-page-template.js"
   )
   result.data.allYouTube.edges.forEach(({ node }, index) => {
     const { id, slug } = node
     createPage({
-      id: id,
       path: slug,
       component: youTubePageTemplate,
       context: {
+        id: id,
         pagePath: slug,
       },
       // https://v4.gatsbyjs.com/docs/how-to/rendering-options/using-deferred-static-generation/
