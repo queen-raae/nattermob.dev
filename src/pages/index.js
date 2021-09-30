@@ -24,7 +24,7 @@ const IndexPage = () => {
               }
             }
           }
-          gatsbyPath(filePath: "/{youTube.slug}")
+          slug
           snippet {
             publishedAt
             title
@@ -54,7 +54,7 @@ const IndexPage = () => {
       <ul>
         {treasure.map((video, index) => (
           <li key={index}>
-            <Link to={video.gatsbyPath}>
+            <Link to={video.slug}>
               <h3>
                 {`#${treasure.length - index} `} {video.snippet.title}{" "}
               </h3>
