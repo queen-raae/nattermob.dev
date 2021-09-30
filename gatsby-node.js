@@ -60,7 +60,8 @@ exports.sourceNodes = async ({
 
   const videosResponse = await youtube.videos.list({
     id: ids.join(","),
-    part: "snippet,liveStreamingDetails",
+    // https://developers.google.com/youtube/v3/docs/videos#statistics
+    part: "snippet,liveStreamingDetails,statistics",
   })
 
   videosResponse.data.items.forEach((video) => {
@@ -135,6 +136,18 @@ exports.createPages = async ({
       // https://v4.gatsbyjs.com/docs/how-to/rendering-options/using-deferred-static-generation/
       // index is zero-based index
       defer: index + 1 > 10,
+      // we could use the viewCount to defer
+      // {
+      //   allYouTube {
+      //     edges {
+      //       node {
+      //         statistics {
+      //           viewCount
+      //         }
+      //       }
+      //     }
+      //   }
+      // }
     })
   })
 }
