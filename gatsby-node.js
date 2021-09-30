@@ -126,11 +126,11 @@ exports.createPages = async ({
   result.data.allYouTube.edges.forEach(({ node }, index) => {
     const { id, slug } = node
     createPage({
-      id: id,
       path: slug,
       component: youTubePageTemplate,
       context: {
         pagePath: slug,
+        id: id,
       },
       // https://v4.gatsbyjs.com/docs/how-to/rendering-options/using-deferred-static-generation/
       // index is zero-based index
