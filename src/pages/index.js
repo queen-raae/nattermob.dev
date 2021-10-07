@@ -66,10 +66,12 @@ const IndexPage = () => {
                 ).toLocaleString("en-GB")}
               </p>
 
-              <GatsbyImage
-                alt={video.snippet.title}
-                image={getImage(video.image.url)}
-              />
+              {video.image ? (
+                <GatsbyImage
+                  alt={video.snippet.title}
+                  image={getImage(video.image.url)}
+                />
+              ) : null}
               <br />
             </Link>
           </li>

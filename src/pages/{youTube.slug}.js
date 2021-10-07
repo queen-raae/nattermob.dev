@@ -19,9 +19,12 @@ const YouTubePage = ({ data: { youTube } }) => {
         <Link to="/">← nattermob.dev</Link>
         <h1>{title}</h1>
         <aside>
-          <a href={`https://youtu.be/${id}`} target="_blank" rel="noreferrer">
-            <GatsbyImage alt={title} image={getImage(image.url)} />
-          </a>
+          {image ? (
+            <a href={`https://youtu.be/${id}`} target="_blank" rel="noreferrer">
+              <GatsbyImage alt={title} image={getImage(image.url)} />
+            </a>
+          ) : null}
+
           <p>@ {new Date(scheduledStartTime).toLocaleString("en-GB")}</p>
           <p>
             <a href={`https://youtu.be/${id}`} target="_blank" rel="noreferrer">

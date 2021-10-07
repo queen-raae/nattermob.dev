@@ -1,4 +1,5 @@
 import React, { Fragment, useState, useEffect } from "react"
+import { Link } from "gatsby"
 import { useAuth0 } from "@auth0/auth0-react"
 import axios from "axios"
 
@@ -32,6 +33,7 @@ const LiveNowBadge = () => {
   const [isLoading, setIsLoading] = useState(true)
   const [areWeLive, setAreWeLive] = useState(false)
   const [hasError, setHasError] = useState(false)
+  const [accessToken, setAccessToken] = useState(false)
 
   const liveMessage = "LIVE NOW - youtube.com/raaecodes"
   const notLiveMessage = "NOT LIVE - youtube.com/raaecodes"
@@ -45,6 +47,8 @@ const LiveNowBadge = () => {
       const accessToken = await getAccessTokenSilently({
         audience: process.env.GATSBY_AUTH0_AUDIENCE,
       })
+
+      setAccessToken(accessToken)
 
       try {
         const response = await axios.get("/api/are-we-live", {
@@ -82,11 +86,9 @@ const LiveNowBadge = () => {
   return (
     <Fragment>
       {isMounted ? (
-        <a
+        <Link
           style={{ textDecoration: "none" }}
-          href="http://youtube.com/raaecodes"
-          target="_blank"
-          rel="noreferrer"
+          to={`/live/?accessToken=${accessToken}`}
         >
           <div
             style={{
@@ -141,7 +143,7 @@ const LiveNowBadge = () => {
               </Fragment>
             )}
           </div>
-        </a>
+        </Link>
       ) : null}
     </Fragment>
   )
