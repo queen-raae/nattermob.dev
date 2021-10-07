@@ -73,14 +73,15 @@ const getAreWeLive = async (req, res) => {
     part: "snippet",
   })
 
-  const areWeLive = videosResponse.data.items.some(
+  const liveVideo = videosResponse.data.items.some(
     (video) => video.snippet.liveBroadcastContent === "live"
   )
 
   res.status(200).json({
-    message: areWeLive
+    message: liveVideo
       ? "We are probably live 🎉"
       : "We are probably not live 😥",
-    areWeLive: areWeLive,
+    areWeLive: liveVideo ? true : false,
+    liveVideo: liveVideo,
   })
 }
