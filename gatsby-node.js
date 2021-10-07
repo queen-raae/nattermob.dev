@@ -1,3 +1,4 @@
+const path = require("path")
 const { google } = require("googleapis")
 const slugify = require("@sindresorhus/slugify")
 const { createRemoteFileNode } = require("gatsby-source-filesystem")
@@ -66,7 +67,7 @@ exports.sourceNodes = async ({
     createNode({
       ...video,
       id: video.id,
-      slug: slugify(video.id),
+      slug: `${slugify(video.id)}/`,
       internal: {
         type: YOUTUBE,
         contentDigest: createContentDigest(video),
@@ -92,4 +93,48 @@ exports.onCreateNode = async ({
       store,
     })
   }
+}
+
+exports.createPages = async ({
+  graphql,
+  actions: { createPage },
+  reporter,
+}) => {
+  const result = await graphql(
+    `
+      {
+        allYouTube {
+          edges {
+            node {
+              id
+              slug
+            }
+          }
+        }
+      }
+    `
+  )
+
+  if (result.errors) {
+    reporter.panicOnBuild(`Error while running GraphQL query.`)
+    return
+  }
+
+  const youTubePageTemplate = path.resolve(
+    `src/templates/youtube-page-template.js`
+  )
+  result.data.allYouTube.edges.forEach(({ node }, index) => {
+    const { id, slug } = node
+    createPage({
+      path: slug,
+      component: youTubePageTemplate,
+      context: {
+        pagePath: slug,
+        id: id,
+      },
+      // https://v4.gatsbyjs.com/docs/how-to/rendering-options/using-deferred-static-generation/
+      // index is zero-based index
+      defer: index + 1 > 10,
+    })
+  })
 }

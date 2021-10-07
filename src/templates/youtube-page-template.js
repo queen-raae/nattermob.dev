@@ -4,24 +4,27 @@ import { GatsbyImage, getImage } from "gatsby-plugin-image"
 
 import Seo from "../components/seo"
 
-const YouTubePage = ({ data: { youTube } }) => {
+const YouTubePageTemplate = ({ data: { youTube } }) => {
   const {
     id,
-    gatsbyPath,
+    slug,
     snippet: { title, description, channelTitle },
     liveStreamingDetails: { scheduledStartTime },
     image,
   } = youTube
 
   return (
-    <Seo path={gatsbyPath} pageTitle={title} pageDescription={description}>
+    <Seo path={slug} pageTitle={title} pageDescription={description}>
       <main style={{ maxWidth: "800px", margin: "0 auto", padding: "1em" }}>
         <Link to="/">← nattermob.dev</Link>
         <h1>{title}</h1>
         <aside>
-          <a href={`https://youtu.be/${id}`} target="_blank" rel="noreferrer">
-            <GatsbyImage alt={title} image={getImage(image.url)} />
-          </a>
+          {image ? (
+            <a href={`https://youtu.be/${id}`} target="_blank" rel="noreferrer">
+              <GatsbyImage alt={title} image={getImage(image.url)} />
+            </a>
+          ) : null}
+
           <p>@ {new Date(scheduledStartTime).toLocaleString("en-GB")}</p>
           <p>
             <a href={`https://youtu.be/${id}`} target="_blank" rel="noreferrer">
@@ -39,7 +42,7 @@ export const query = graphql`
   query ($id: String) {
     youTube(id: { eq: $id }) {
       id
-      gatsbyPath(filePath: "/{youTube.slug}")
+      slug
       image {
         url {
           childImageSharp {
@@ -71,4 +74,4 @@ export const query = graphql`
   }
 `
 
-export default YouTubePage
+export default YouTubePageTemplate
