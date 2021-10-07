@@ -47,7 +47,7 @@ const LiveNowBadge = () => {
       })
 
       try {
-        const response = await axios.post("/api/are-we-live", null, {
+        const response = await axios.get("/api/are-we-live", {
           headers: {
             Authorization: `Bearer ${accessToken}`,
           },
@@ -56,7 +56,7 @@ const LiveNowBadge = () => {
         setAreWeLive(response.data.areWeLive)
         setIsLoading(false)
       } catch (error) {
-        console.log(error)
+        console.log(error.response?.data?.message || error.message)
         setHasError(true)
         setIsLoading(false)
       }
