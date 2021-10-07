@@ -78,7 +78,7 @@ const getAreWeLive = async (req, res) => {
   )
 
   res.status(200).json({
-    messsage: areWeLive
+    message: areWeLive
       ? "We are probably live 🎉"
       : "We are probably not live 😥",
     areWeLive: areWeLive,
