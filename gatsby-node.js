@@ -81,8 +81,10 @@ exports.onCreateNode = async ({
   createNodeId,
   cache,
   store,
+  reporter,
 }) => {
   if (node.internal.type === YOUTUBE) {
+    console.log(node.snippet.thumbnails.maxres.url)
     node.image = await createRemoteFileNode({
       url: node.snippet.thumbnails.maxres.url,
       parentNodeId: node.id,
@@ -90,6 +92,7 @@ exports.onCreateNode = async ({
       createNodeId,
       cache,
       store,
+      reporter,
     })
   }
 }
