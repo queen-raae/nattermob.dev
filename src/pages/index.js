@@ -43,7 +43,7 @@ const IndexPage = () => {
     <main className="container mx-auto p-6">
       <div className="grid gap-10">
         <div className="grid gap-4">
-          <h1 className="text-4xl font-bold">
+          <h1 className="text-4xl font-bold text-red-600">
             Gatsby Deep Dives with Queen Raae and the Nattermob Pirates
           </h1>
 
@@ -59,7 +59,7 @@ const IndexPage = () => {
           </p>
         </div>
         <div className="grid gap-4">
-          <h2 className="text-2xl font-bold">The streams:</h2>
+          <h2 className="text-2xl font-bold font-mono">The streams:</h2>
           <ul className="grid gap-6 lg:grid-cols-2">
             {treasure.map((video, index) => (
               <li
