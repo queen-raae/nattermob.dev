@@ -21,7 +21,7 @@ const YouTubePage = ({ data: { youTube } }) => {
         <aside>
           {image ? (
             <a href={`https://youtu.be/${id}`} target="_blank" rel="noreferrer">
-              <GatsbyImage alt={title} image={getImage(image.url)} />
+              <GatsbyImage alt={title} image={getImage(image)} />
             </a>
           ) : null}
 
@@ -44,14 +44,12 @@ export const query = graphql`
       id
       gatsbyPath(filePath: "/{youTube.slug}")
       image {
-        url {
-          childImageSharp {
-            gatsbyImageData(
-              transformOptions: { fit: COVER, cropFocus: CENTER }
-              width: 1280
-              height: 720
-            )
-          }
+        childImageSharp {
+          gatsbyImageData(
+            transformOptions: { fit: COVER, cropFocus: CENTER }
+            width: 1280
+            height: 720
+          )
         }
       }
       snippet {

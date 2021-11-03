@@ -14,14 +14,12 @@ const IndexPage = () => {
         nodes {
           slug
           image {
-            url {
-              childImageSharp {
-                gatsbyImageData(
-                  transformOptions: { fit: COVER, cropFocus: CENTER }
-                  width: 180
-                  height: 100
-                )
-              }
+            childImageSharp {
+              gatsbyImageData(
+                transformOptions: { fit: COVER, cropFocus: CENTER }
+                width: 180
+                height: 100
+              )
             }
           }
           gatsbyPath(filePath: "/{youTube.slug}")
@@ -69,7 +67,7 @@ const IndexPage = () => {
               {video.image ? (
                 <GatsbyImage
                   alt={video.snippet.title}
-                  image={getImage(video.image.url)}
+                  image={getImage(video.image)}
                 />
               ) : null}
               <br />
