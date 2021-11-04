@@ -91,9 +91,7 @@ exports.onCreateNode = async ({
       reporter,
     })
     if (image) {
-      if (image) {
-        createNodeField({ node, name: "image", value: image.id })
-      }
+      createNodeField({ node, name: "image", value: image.id })
     }
   }
 }
