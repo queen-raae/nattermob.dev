@@ -19,9 +19,12 @@ const YouTubePage = ({ data: { youTube } }) => {
         <Link to="/">← nattermob.dev</Link>
         <h1>{title}</h1>
         <aside>
-          <a href={`https://youtu.be/${id}`} target="_blank" rel="noreferrer">
-            <GatsbyImage alt={title} image={getImage(image.url)} />
-          </a>
+          {image ? (
+            <a href={`https://youtu.be/${id}`} target="_blank" rel="noreferrer">
+              <GatsbyImage alt={title} image={getImage(image)} />
+            </a>
+          ) : null}
+
           <p>@ {new Date(scheduledStartTime).toLocaleString("en-GB")}</p>
           <p>
             <a href={`https://youtu.be/${id}`} target="_blank" rel="noreferrer">
@@ -41,14 +44,12 @@ export const query = graphql`
       id
       gatsbyPath(filePath: "/{youTube.slug}")
       image {
-        url {
-          childImageSharp {
-            gatsbyImageData(
-              transformOptions: { fit: COVER, cropFocus: CENTER }
-              width: 1280
-              height: 720
-            )
-          }
+        childImageSharp {
+          gatsbyImageData(
+            transformOptions: { fit: COVER, cropFocus: CENTER }
+            width: 1280
+            height: 720
+          )
         }
       }
       snippet {
