@@ -11,10 +11,7 @@ require("dotenv").config({
 exports.createSchemaCustomization = ({ actions: { createTypes } }) => {
   createTypes(`
     type youTube implements Node {
-      image: youTubeImage
-    }
-    type youTubeImage @dontInfer {
-      url: File @link(by: "url")
+      image: File @link(from: "fields.image")
     }
   `)
 }
@@ -77,19 +74,24 @@ exports.sourceNodes = async ({
 
 exports.onCreateNode = async ({
   node,
-  actions: { createNode },
+  actions: { createNodeField, createNode },
   createNodeId,
   cache,
   store,
+  reporter,
 }) => {
   if (node.internal.type === YOUTUBE) {
-    node.image = await createRemoteFileNode({
+    let image = await createRemoteFileNode({
       url: node.snippet.thumbnails.maxres.url,
       parentNodeId: node.id,
       createNode,
       createNodeId,
       cache,
       store,
+      reporter,
     })
+    if (image) {
+      createNodeField({ node, name: "image", value: image.id })
+    }
   }
 }
