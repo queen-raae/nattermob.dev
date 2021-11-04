@@ -6,6 +6,7 @@ module.exports = {
       "A rum fueled treasure hunt in the sharky waters around Gatsby islands.",
   },
   plugins: [
+    `gatsby-plugin-postcss`,
     `gatsby-plugin-react-helmet`,
     `gatsby-plugin-image`,
     `gatsby-transformer-sharp`,

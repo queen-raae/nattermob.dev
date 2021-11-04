@@ -3,6 +3,8 @@ import { Auth0Provider } from "@auth0/auth0-react"
 import Seo from "./src/components/seo"
 import Header from "./src/components/header"
 
+import "./src/styles/global.css"
+
 export const wrapPageElement = ({ element }) => {
   return <Seo>{element}</Seo>
 }
