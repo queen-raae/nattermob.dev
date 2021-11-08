@@ -76,7 +76,7 @@ exports.sourceNodes = async ({
 
 exports.onCreateNode = async ({
   node,
-  actions: { createNodeField, createNode, createParentChildLink },
+  actions: { createNodeField, createNode },
   createContentDigest,
   createNodeId,
   cache,
