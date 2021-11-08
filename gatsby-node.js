@@ -3,6 +3,7 @@ const slugify = require("@sindresorhus/slugify")
 const { createRemoteFileNode } = require("gatsby-source-filesystem")
 
 const YOUTUBE = "youTube"
+const MAX_RESULTS = process.env !== "production" ? 5 : 50
 
 require("dotenv").config({
   path: `.env.${process.env.NODE_ENV}`,
@@ -12,6 +13,7 @@ exports.createSchemaCustomization = ({ actions: { createTypes } }) => {
   createTypes(`
     type youTube implements Node {
       image: File @link(from: "fields.image")
+      description: youTubeDescription @link(from: "fields.description")
     }
   `)
 }
@@ -45,7 +47,7 @@ exports.sourceNodes = async ({
   const playlistItemsResponse = await youtube.playlistItems.list({
     playlistId: "PL9W-8hhRoLoN7axEFJQ17rJvk2KTiM2GP",
     part: "snippet",
-    maxResults: 50,
+    maxResults: MAX_RESULTS,
     order: "date",
     type: "video",
   })
@@ -74,14 +76,15 @@ exports.sourceNodes = async ({
 
 exports.onCreateNode = async ({
   node,
-  actions: { createNodeField, createNode },
+  actions: { createNodeField, createNode, createParentChildLink },
+  createContentDigest,
   createNodeId,
   cache,
   store,
   reporter,
 }) => {
   if (node.internal.type === YOUTUBE) {
-    let image = await createRemoteFileNode({
+    const imageNode = await createRemoteFileNode({
       url: node.snippet.thumbnails.maxres.url,
       parentNodeId: node.id,
       createNode,
@@ -90,8 +93,27 @@ exports.onCreateNode = async ({
       store,
       reporter,
     })
-    if (image) {
-      createNodeField({ node, name: "image", value: image.id })
+
+    const descriptionNode = {
+      id: createNodeId(`${node.id} >>> markdown`),
+      parent: node.id,
+      internal: {
+        mediaType: "text/markdown",
+        type: `${YOUTUBE}Description`,
+        content: node.snippet.description,
+        contentDigest: createContentDigest(node.snippet.description),
+        description: `YouTube description for ${node.slug}`,
+      },
+    }
+
+    createNode(descriptionNode)
+
+    if (imageNode) {
+      createNodeField({ node, name: "image", value: imageNode.id })
+    }
+
+    if (descriptionNode) {
+      createNodeField({ node, name: "description", value: descriptionNode.id })
     }
   }
 }
