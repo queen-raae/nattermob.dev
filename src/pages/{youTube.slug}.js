@@ -8,13 +8,16 @@ const YouTubePage = ({ data: { youTube } }) => {
   const {
     id,
     gatsbyPath,
-    snippet: { title, description, channelTitle },
+    snippet: { title, channelTitle },
     liveStreamingDetails: { scheduledStartTime },
     image,
+    description: {
+      childMarkdownRemark: { html, rawMarkdownBody },
+    },
   } = youTube
 
   return (
-    <Seo path={gatsbyPath} pageTitle={title} pageDescription={description}>
+    <Seo path={gatsbyPath} pageTitle={title} pageDescription={rawMarkdownBody}>
       <main style={{ maxWidth: "800px", margin: "0 auto", padding: "1em" }}>
         <Link to="/">← nattermob.dev</Link>
         <h1>{title}</h1>
@@ -32,7 +35,11 @@ const YouTubePage = ({ data: { youTube } }) => {
             </a>
           </p>
         </aside>
-        <pre style={{ whiteSpace: "pre-wrap" }}>{description}</pre>
+
+        <section
+          className="markdown"
+          dangerouslySetInnerHTML={{ __html: html }}
+        />
       </main>
     </Seo>
   )
@@ -52,10 +59,15 @@ export const query = graphql`
           )
         }
       }
+      description {
+        childMarkdownRemark {
+          html
+          rawMarkdownBody
+        }
+      }
       snippet {
         publishedAt(formatString: "DD/MMM/YYYY, h:mm:ss a")
         title
-        description
         thumbnails {
           high {
             height
