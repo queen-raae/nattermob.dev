@@ -3,7 +3,7 @@ const slugify = require("@sindresorhus/slugify")
 const { createRemoteFileNode } = require("gatsby-source-filesystem")
 
 const YOUTUBE = "youTube"
-const MAX_RESULTS = process.env !== "production" ? 5 : 50
+const MAX_RESULTS = process.env.NODE_ENV === "development" ? 5 : 50
 
 require("dotenv").config({
   path: `.env.${process.env.NODE_ENV}`,
