@@ -21,5 +21,11 @@ module.exports = {
         },
       },
     },
+    {
+      resolve: "@raae/gatsby-plugin-let-it-snow",
+      options: {
+        colors: ["#dc2626", "#1ac3e5", "#66339a"]
+      }
+    }
   ],
 }
