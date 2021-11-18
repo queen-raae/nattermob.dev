@@ -35,6 +35,7 @@
     "gatsby-plugin-react-helmet": "5.0.0",
     "gatsby-plugin-sharp": "4.0.0",
     "gatsby-source-filesystem": "4.0.0",
+    "gatsby-source-storyblok": "^3.0.1",
     "gatsby-transformer-remark": "5.1.0",
     "gatsby-transformer-sharp": "^4.0.0",
     "googleapis": "71.0.0",

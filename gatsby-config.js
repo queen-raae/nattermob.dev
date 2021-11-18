@@ -1,3 +1,7 @@
+require("dotenv").config({
+  path: `.env.${process.env.NODE_ENV}`,
+})
+
 module.exports = {
   siteMetadata: {
     title: "Gatsby Deep Dives with Queen Raae and the Nattermob Pirates",
@@ -19,6 +23,13 @@ module.exports = {
           formats: ["auto", "webp", "avif"],
           placeholder: "blurred",
         },
+      },
+    },
+    {
+      resolve: "gatsby-source-storyblok",
+      options: {
+        accessToken: process.env.STORYBLOK_PREVIEW_API_KEY,
+        version: "draft",
       },
     },
   ],
