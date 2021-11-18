@@ -1,3 +1,7 @@
+require("dotenv").config({
+  path: `.env.${process.env.NODE_ENV}`,
+})
+
 module.exports = {
   siteMetadata: {
     title: "Gatsby Deep Dives with Queen Raae and the Nattermob Pirates",
@@ -24,8 +28,15 @@ module.exports = {
     {
       resolve: "@raae/gatsby-plugin-let-it-snow",
       options: {
-        colors: ["#dc2626", "#1ac3e5", "#66339a"]
-      }
-    }
+        colors: ["#dc2626", "#1ac3e5", "#66339a"],
+      },
+    },
+    {
+      resolve: "gatsby-source-storyblok",
+      options: {
+        accessToken: process.env.STORYBLOK_PREVIEW_API_KEY,
+        version: "draft",
+      },
+    },
   ],
 }
