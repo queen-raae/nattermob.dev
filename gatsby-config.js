@@ -26,6 +26,12 @@ module.exports = {
       },
     },
     {
+      resolve: "@raae/gatsby-plugin-let-it-snow",
+      options: {
+        colors: ["#dc2626", "#1ac3e5", "#66339a"],
+      },
+    },
+    {
       resolve: "gatsby-source-storyblok",
       options: {
         accessToken: process.env.STORYBLOK_PREVIEW_API_KEY,
