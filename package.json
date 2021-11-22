@@ -29,6 +29,7 @@
     "@heroicons/react": "1.0.5",
     "@raae/gatsby-plugin-let-it-snow": "^0.1.0",
     "@tailwindcss/typography": "0.4.1",
+    "date-fns": "^2.26.0",
     "dotenv": "8.2.0",
     "express-jwt": "6.0.0",
     "gatsby": "4.0.0",
