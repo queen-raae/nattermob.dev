@@ -2,6 +2,8 @@ import React from "react"
 import { useStaticQuery, graphql, Link } from "gatsby"
 import { GatsbyImage, getImage } from "gatsby-plugin-image"
 
+import CountdownTimer from "../components/countdown-timer"
+
 const IndexPage = () => {
   const data = useStaticQuery(graphql`
     {
@@ -56,6 +58,9 @@ const IndexPage = () => {
             </a>
           </p>
         </div>
+
+        <CountdownTimer end={new Date("January 4, 2022")} />
+
         <div className="grid gap-4">
           <h2 className="text-2xl font-bold font-mono">The streams:</h2>
           <ul className="grid gap-6 lg:grid-cols-2">
