@@ -1,8 +1,22 @@
-import React from "react"
+import React, { useState, useEffect } from "react"
 import { useStaticQuery, graphql, Link } from "gatsby"
 import { GatsbyImage, getImage } from "gatsby-plugin-image"
 
-const IndexPage = () => {
+const IndexPage = ({ location }) => {
+  const [message, setMessage] = useState("")
+
+  useEffect(() => {
+    // Check to see if this is a redirect back from Checkout
+    const query = new URLSearchParams(location.search)
+    if (query.get("success")) {
+      setMessage("Donation succeded -- thank you 🎉")
+    }
+
+    if (query.get("canceled")) {
+      setMessage("Donation canceled -- try again when you’re ready.")
+    }
+  }, [location.search])
+
   const data = useStaticQuery(graphql`
     {
       built {
@@ -55,6 +69,30 @@ const IndexPage = () => {
               our newsletter
             </a>
           </p>
+          {message ? (
+            message
+          ) : (
+            <form
+              action="/api/@raae/gatsby-plugin-donations/donation"
+              method="POST"
+            >
+              <fieldset>
+                <p>
+                  <label htmlFor="amount">Amount: </label>
+                  <br />
+                  <input
+                    type="number"
+                    id="amount"
+                    name="amount"
+                    defaultValue="10"
+                  />
+                </p>
+                <p>
+                  <button>Donate</button>
+                </p>
+              </fieldset>
+            </form>
+          )}
         </div>
         <div className="grid gap-4">
           <h2 className="text-2xl font-bold font-mono">The streams:</h2>
