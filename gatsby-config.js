@@ -7,6 +7,7 @@ module.exports = {
   },
   plugins: [
     `gatsby-plugin-postcss`,
+    `@raae/gatsby-plugin-donations`,
     `gatsby-plugin-react-helmet`,
     `gatsby-plugin-image`,
     `gatsby-transformer-sharp`,
@@ -24,8 +25,8 @@ module.exports = {
     {
       resolve: "@raae/gatsby-plugin-let-it-snow",
       options: {
-        colors: ["#dc2626", "#1ac3e5", "#66339a"]
-      }
-    }
+        colors: ["#dc2626", "#1ac3e5", "#66339a"],
+      },
+    },
   ],
 }

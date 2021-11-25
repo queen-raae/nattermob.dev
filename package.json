@@ -27,6 +27,7 @@
   "dependencies": {
     "@auth0/auth0-react": "1.6.0",
     "@heroicons/react": "1.0.5",
+    "@raae/gatsby-plugin-donations": "1.0.0-next.1",
     "@raae/gatsby-plugin-let-it-snow": "^0.1.0",
     "@tailwindcss/typography": "0.4.1",
     "dotenv": "8.2.0",
