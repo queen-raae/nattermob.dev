@@ -28,7 +28,7 @@
     "@auth0/auth0-react": "1.6.0",
     "@heroicons/react": "1.0.5",
     "@raae/gatsby-plugin-let-it-snow": "^0.1.0",
-    "@tailwindcss/typography": "0.4.1",
+    "@tailwindcss/typography": "^0.5.1",
     "dotenv": "8.2.0",
     "express-jwt": "6.0.0",
     "gatsby": "4.0.0",
@@ -46,12 +46,12 @@
     "react-helmet": "6.1.0"
   },
   "devDependencies": {
-    "autoprefixer": "^10.3.7",
-    "gatsby-plugin-postcss": "^5.0.0",
+    "autoprefixer": "^10.4.2",
+    "gatsby-plugin-postcss": "^5.6.0",
     "husky": "^6.0.0",
-    "postcss": "^8.3.11",
+    "postcss": "^8.4.6",
     "prettier": "^2.3.0",
-    "tailwindcss": "^2.2.17"
+    "tailwindcss": "^3.0.18"
   },
   "resolutions": {
     "webpack": "5.52.1"
